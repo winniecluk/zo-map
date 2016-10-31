@@ -11,12 +11,12 @@ console.log('routes')
     $stateProvider
       .state('map', {
         url: '/',
-        controller: 'MapController as map',
+        controller: 'MapController as vm',
         templateUrl: 'templates/map.html'
       })
       .state('signup', {
         url: '/signup',
-        controller: 'SignUpController as sign',
+        controller: 'SignUpController as vm',
         templateUrl: 'templates/signup.html'
       })
 
