@@ -13,6 +13,6 @@ gulp.task('styles', function(){
     .pipe(gulp.dest('public/stylesheets'));
 });
 
-gulp.task('default', ['scripts', 'styles'])
+gulp.task('default', ['scripts', 'styles']);
 
 gulp.watch(['../client/css/*.css', '../client/js/**/*.js'])
