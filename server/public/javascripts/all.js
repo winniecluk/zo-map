@@ -5,10 +5,13 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 (function(){
   'use strict';
 
-  angular.module('app', [])
-  // .config() route defs in here
+  angular.module('app', ['ui.router'])
+    .config(Routes);
+
+  Routes.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 })();
+
 
 (function(){
   'use strict';
