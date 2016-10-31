@@ -1,0 +1,38 @@
+* {
+  border: 1px solid red;
+}
+
+body {
+  background: url('../images/textured-peach-1.jpg');
+  background-size: contain;
+  font: 1em "Open Sans", sans-serif
+}
+
+#map {
+  position: relative;
+  background-color: dodgerblue;
+  width: 1050px;
+  height: 700px;
+  margin: 0 auto;
+}
+
+#identifier {
+  position: absolute;
+  text-align: center;
+  width: 1050px;
+/*  left: 460px;*/
+  bottom: 60px;
+  color: white;
+  font-size: 3em;
+}
+
+#console {
+  height: 60vh;
+  width: 100vw;
+}
+
+nav {
+  text-align: right;
+  font-weight: bold;
+  font-size: 2em;
+}
