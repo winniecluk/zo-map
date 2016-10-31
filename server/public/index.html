@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
   <meta charset="UTF-8">
   <title>ZO Artists</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
   <link rel="stylesheet" type="text/css" href="stylesheets/all.css">
+  <script src="javascripts/all.js"></script>
 </head>
 <body>
+  This is my index page
+  <nav>
+    <a ui-sref="signup">SIGN UP</a>
+  </nav>
 
+  <main ui-view></main>
 
-  <script src="javascripts/all.js"></script>
 </body>
 </html>

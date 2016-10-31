@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 
 gulp.task('scripts', function(){
-  return gulp.src(['../client/libs/*.js', '../client/js/app.js', '../client/js/services/*.js', '../client/js/controllers/*.js'])
+  return gulp.src(['../client/libs/*.js', '../client/js/app.js', '../client/js/**/*.js'])
     .pipe(concat('all.js'))
     .pipe(gulp.dest('public/javascripts'));
 });
@@ -15,4 +15,4 @@ gulp.task('styles', function(){
 
 gulp.task('default', ['scripts', 'styles']);
 
-gulp.watch(['../client/css/*.css', '../client/js/**/*.js'])
+gulp.watch(['../client/css/*.css', '../client/js/**/*.js'], ['default'])
