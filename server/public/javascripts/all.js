@@ -32,6 +32,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
 })();
 
+
 // (function(){
 //   'use strict';
 
@@ -1087,6 +1088,22 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
     return service;
   } // this closes TokenService function
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
+    .controller('ArtistsController', ArtistsController);
+
+  ArtistsController.$inject = ['$http'];
+
+  function ArtistsController($http){
+    var vm = this;
+
+
+  }
+
 })();
 
 (function(){
