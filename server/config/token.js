@@ -17,19 +17,16 @@ function makeToken(req, res, next){
     User.findOne({ 'username' : req.body.username })
     // now check password
       .then(function(user){
-        // if (!user){
-        //   return next({
-        //     message: 'User does not exit',
-        //     status: 403
-        //   })
-          // res.status(400).send('User does not exist');
-        // } this closes the (if user does not exist) conditional
-        console.log(user);
-        var token = jwt.sign({user: user}, jwtSecret, jwtOptions);
-        return res.json({
-          token: token
-        });
-      }) // this closes the then
+        // if (!user || !user.verifyPasswordSync(req.body.password)){
+        //   return res.status(400).json({error: 'Bad credentials.'});
+        // } else { // this closes the (if user does not exist) conditional
+          console.log(user);
+          var token = jwt.sign({user: user}, jwtSecret, jwtOptions);
+          return res.json({
+            token: token
+        })
+      // }; // this closes the elseif
+    }) // this closes the then
     // now that I've found the user, here I want to make a token
     // look at jwt docs
   } // this closes the if/else
