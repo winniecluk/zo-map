@@ -4,13 +4,20 @@
   angular.module('app')
     .controller('SignUpController', SignUpController);
 
-  function SignUpController(){
+  SignUpController.$inject = ['$http', '$state'];
+
+  function SignUpController($http, $state){
     var vm = this;
     vm.newArtist = {};
+    vm.postArtist = postArtist;
+    vm.blankForm = true;
 
-    // function postArtist(evt){
-    //   $http.post('')
-    // }
-  }
+    function postArtist(evt){
+      var newArtist = vm.newArtist;
+      $http.post('api/artists', {newArtist}).then(function(response){
+        vm.blankForm = false;
+      })
+    } // this ends postArtist function
+  } // this ends SignUpController function
 
-})
+})();
