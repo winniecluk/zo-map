@@ -3,4 +3,7 @@ Hey this is a map page
 <div id="map">
 </div>
   <div id="identifier">{{vm.country}}</div>
-<div id="console"></div>
+<div id="console">
+  <div ng-repeat="artist in vm.countryArtist">{{artist.name}} - {{artist.phone}}</div>
+
+</div>
