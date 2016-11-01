@@ -6,6 +6,11 @@
 
   function SignUpController(){
     var vm = this;
+    vm.newArtist = {};
+
+    // function postArtist(evt){
+    //   $http.post('')
+    // }
   }
 
 })

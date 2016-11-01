@@ -9,14 +9,13 @@
   function MapController(MapService, $http){
     var vm = this;
     vm.title = 'hey there';
-
-    $http.get('/api/countries').then(function(response){
-      console.log(response);
+    MapService.getCountries(function(artistsArr, group_a) {
+      vm.artistsArr = artistsArr;
+      vm.group_a = group_a;
+      console.log('this is artistsArr on controller ' + vm.artistsArr[0].name);
     })
 
 
-    // console.log('this is rsr ' + vm.rsr);
-    // console.log('this is group_a ' + vm.group_a)
 
   } // this closes MapController function
 

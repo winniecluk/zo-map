@@ -6,29 +6,29 @@
 
 <div class="form-row">
   <label>Phone:</label>
-  <input type="text" placeholder="Phone" id="phone">
+  <input type="text" placeholder="Phone" ng-model="vm.newArtist.phone">
 
   <label>Email:</label>
-  <input type="text" placeholder="Email" id="email">
+  <input type="text" placeholder="Email" ng-model="vm.newArtist.email">
 
 </div>
 
 <div class="form-row">
   <label>Website:</label>
-  <input type="text" placeholder="Website" id="website">
+  <input type="text" placeholder="Website" ng-model="vm.newArtist.website">
 </div>
 
 <div class="form-row">
   <label>City</label>
-  <input type="text" placeholder="City" id="city">
+  <input type="text" placeholder="City" ng-model="vm.newArtist.city">
 
   <label>Country of Origin:</label>
-  <select id="country">
+  <select ng-model="vm.newArtist.country">
     <option value="US">United States</option>
   </select>
 
   <label>Medium:</label>
-  <select id="medium">
+  <select ng-model="vm.newArtist.medium">
     <option value="painter" selected>Painter</option>
   </select>
 </div>
@@ -36,9 +36,9 @@
 <div class="form-row">
   <label>Short biography you'd like to have displayed:</label>
   <br />
-  <textarea id="biography"></textarea>
+  <textarea ng-model="vm.newArtist.biography"></textarea>
 </div>
 
 <div class="form-row">
-  <button id="submit">Submit</button>
+  <button ng-click="vm.postArtist()">Submit</button>
 </div>
