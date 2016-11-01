@@ -10,13 +10,9 @@
     var group_a = MapService.group_a;
     var artistsArr = [];
 
-
-    console.log(group_a);
-
     function getCountries(cb){
       $http.get('/api/countries').then(function(response){
         response.data.forEach(function(country, countryIdx){
-          // console.log(country);
           artistsArr.push(country);
         });
         group_a.forEach(function(el, idx, arr){
@@ -31,9 +27,7 @@
     //   return artistsArr
     // }
 
-
     var service = {
-      artistsArr: artistsArr,
       getCountries: getCountries
     }
 
