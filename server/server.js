@@ -9,7 +9,7 @@ var cors = require('cors');
 require('dotenv').config();
 require('./config/database');
 
-// var index = require('./routes/index');
+var index = require('./routes/index');
 // var users = require('./routes/users');
 var api = require('./routes/api');
 
@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-// app.use('/', index);
+app.use('/', index);
 // app.use('/users', users);
 app.use('/api', api);
 

@@ -1016,6 +1016,28 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   'use strict';
 
   angular.module('app')
+    .controller('LogInController', LogInController);
+
+  LogInController.$inject = ['$http'];
+
+  function LogInController($http){
+    var vm = this;
+    vm.login = login;
+
+    function login(){
+      $http.post('/login', {hello: 'hello'}).then(function(response){
+        console.log(response);
+      });
+    }
+
+  } // this closes the LogInController function
+
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
     .controller('MapController', MapController);
 
   MapController.$inject = ['CountriesService', '$http', '$scope'];

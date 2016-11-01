@@ -14,4 +14,9 @@ var Country = require('../models/country');
 //   })
 // })
 
-// module.exports = router;
+router.post('/login', function(req, res, next){
+  console.log('i got the request');
+  res.send('ok');
+});
+
+module.exports = router;
