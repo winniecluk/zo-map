@@ -39,13 +39,19 @@ console.log('routes')
 
   function MapService($http){
     var service = {
+      artistsArr: artistsArr,
+      group_a: group_a,
+      artist: artist,
+      getCountries: getCountries
     }
+
+    var artistsArr = [];
+    var artist;
 
     var rsr = Raphael('map', '1050', '700');
 
     var rsrGroups = [group_a];
 
-    // you may want the below in a controller
     var group_a = rsr.set();
 
     // path creates the borders of the country
@@ -939,6 +945,41 @@ console.log('routes')
       ZW
     ); // this is the end of the push method on group_a
 
+    function getCountries(cb){
+      $http.get('/api/countries').then(function(response){
+        response.data.forEach(function(country, countryIdx){
+          console.log(country);
+          artistsArr.push(country);
+        });
+        group_a.forEach(function(el, idx, arr){
+          el.data('country', artistsArr[idx].name);
+          el.data('artists', artistsArr[idx].artists);
+        })
+        cb(artistsArr, group_a);
+      })
+    }
+
+    group_a.forEach(function(el, idx, arr){
+      el.node.addEventListener('mouseover', function(evt){
+        el.node.setAttribute('fill', 'gold');
+        document.querySelector('#identifier').innerHTML = el.data('country');
+      });
+      el.node.addEventListener('mouseleave', function(evt){
+        el.node.setAttribute('fill', 'black');
+        document.querySelector('#identifier').innerHTML = '';
+      });
+      el.node.addEventListener('click', function(evt){
+        var artists = el.data('artists');
+        if (artists){
+          artists.forEach(function(el, idx, arr){
+            var artistDiv = '<div>' + el.name + '</div>'
+            var phoneDiv = '<div>' + el.phone + '</div>'
+            output += artistDiv + phoneDiv;
+          })
+        }
+        document.querySelector('#console').innerHTML = output;
+      });
+    })
 
     return service;
 
@@ -958,7 +999,11 @@ console.log('routes')
   function MapController(MapService, $http){
     var vm = this;
     vm.title = 'hey there';
-
+    MapService.getCountries(function(artistsArr, group_a) {
+      vm.artistsArr = artistsArr;
+      vm.group_a = group_a;
+      console.log('this is artistsArr on controller ' + vm.artistsArr[0].name);
+    })
 
 
 
@@ -974,6 +1019,11 @@ console.log('routes')
 
   function SignUpController(){
     var vm = this;
+    vm.newArtist = {};
+
+    // function postArtist(evt){
+    //   $http.post('')
+    // }
   }
 
 })
