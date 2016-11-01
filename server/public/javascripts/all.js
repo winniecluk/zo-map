@@ -22,11 +22,28 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         controller: 'SignUpController as vm',
         templateUrl: 'templates/signup.html'
       })
-
+      .state('login', {
+        url: '/login',
+        controller: 'LogInController as vm',
+        templateUrl: 'templates/login.html'
+      })
     $urlRouterProvider.otherwise('/');
   }
 
 })();
+
+// (function(){
+//   'use strict';
+
+//   angular.module('app')
+//     .config(config);
+
+//     config.$inject = ['$httpProvider'];
+
+//     function config($httpProvider){
+//       $httpProvider.interceptors.push('InterceptorService');
+//     }
+// })
 
 (function(){
   'use strict';
@@ -65,6 +82,33 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   }
 
 
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
+    .factory('InterceptorService', InterceptorService);
+
+    InterceptorService.$inject = ['TokenService'];
+
+    function InterceptorService(TokenService){
+
+      function addToken(config){
+        var token = TokenService.getToken();
+        if (token){
+          config.headers = config.headers || {};
+          config.headers.Authorization = `Bearer ${token}`
+        }
+        return config;
+      }
+
+      var service = {
+        request: addToken
+      }
+
+      return service;
+  }
 })();
 
 (function(){
@@ -1012,6 +1056,71 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   'use strict';
 
   angular.module('app')
+    .factory('TokenService', TokenService);
+
+  TokenService.$inject = ['$window'];
+
+  function TokenService($window){
+
+    function storeToken(token){
+      return $window.localStorage.setItem('token', token);
+    }
+
+    function getToken(){
+      return $window.localStorage.getItem('token');
+    }
+
+    function removeToken(){
+      return $window.localStorage.removeItem('token');
+    }
+
+    function decodeToken(token){
+      return $window.atob(token.split('.')[1]);
+    }
+
+    var service = {
+      storeToken: storeToken,
+      getToken: getToken,
+      removeToken: removeToken,
+      decodeToken: decodeToken
+    }
+
+    return service;
+  } // this closes TokenService function
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
+    .controller('LogInController', LogInController);
+
+  LogInController.$inject = ['$http', 'TokenService'];
+
+  function LogInController($http, TokenService){
+    var vm = this;
+    vm.login = login;
+
+    function login(username, password){
+      $http.post('/login', {username, password})
+        .then(function(response){
+          console.log(response.data.token);
+          TokenService.storeToken(response.data.token);
+          vm.user = TokenService.decodeToken(response.data.token);
+          console.log(vm.user);
+        }, function(err){
+          console.log(err);
+        });
+    }
+
+  } // this closes the LogInController function
+
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
     .controller('MapController', MapController);
 
   MapController.$inject = ['CountriesService', '$http', '$scope'];
@@ -1073,13 +1182,20 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('SignUpController', SignUpController);
 
-  function SignUpController(){
+  SignUpController.$inject = ['$http', '$state'];
+
+  function SignUpController($http, $state){
     var vm = this;
     vm.newArtist = {};
+    vm.postArtist = postArtist;
+    vm.blankForm = true;
 
-    // function postArtist(evt){
-    //   $http.post('')
-    // }
-  }
+    function postArtist(evt){
+      var newArtist = vm.newArtist;
+      $http.post('api/artists', {newArtist}).then(function(response){
+        vm.blankForm = false;
+      })
+    } // this ends postArtist function
+  } // this ends SignUpController function
 
-})
+})();

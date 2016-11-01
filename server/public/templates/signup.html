@@ -1,44 +1,48 @@
-<div class="form-row">
-  <label>Name:</label>
-  <input type="text" placeholder="First Name" id="f_name">
-  <input type="text" placeholder="Last Name" id="l_name">
-</div>
+<div ng-if="vm.blankForm">
+  <div class="form-row">
+    <label>Name:</label>
+    <input type="text" placeholder="First Name" ng-model="vm.newArtist.f_name">
+    <input type="text" placeholder="Last Name" ng-model="vm.newArtist.l_name">
+  </div>
 
-<div class="form-row">
-  <label>Phone:</label>
-  <input type="text" placeholder="Phone" ng-model="vm.newArtist.phone">
+  <div class="form-row">
+    <label>Phone:</label>
+    <input type="text" placeholder="Phone" ng-model="vm.newArtist.phone">
 
-  <label>Email:</label>
-  <input type="text" placeholder="Email" ng-model="vm.newArtist.email">
+    <label>Email:</label>
+    <input type="text" placeholder="Email" ng-model="vm.newArtist.email">
 
-</div>
+  </div>
 
-<div class="form-row">
-  <label>Website:</label>
-  <input type="text" placeholder="Website" ng-model="vm.newArtist.website">
-</div>
+  <div class="form-row">
+    <label>Website:</label>
+    <input type="text" placeholder="Website" ng-model="vm.newArtist.website">
+  </div>
 
-<div class="form-row">
-  <label>City</label>
-  <input type="text" placeholder="City" ng-model="vm.newArtist.city">
+  <div class="form-row">
+    <label>City</label>
+    <input type="text" placeholder="City" ng-model="vm.newArtist.city">
 
-  <label>Country of Origin:</label>
-  <select ng-model="vm.newArtist.country">
-    <option value="US">United States</option>
-  </select>
+    <label>Country of Origin:</label>
+    <select ng-model="vm.newArtist.country">
+      <option value="US">United States</option>
+    </select>
 
-  <label>Medium:</label>
-  <select ng-model="vm.newArtist.medium">
-    <option value="painter" selected>Painter</option>
-  </select>
-</div>
+    <label>Medium:</label>
+    <select ng-model="vm.newArtist.medium">
+      <option value="painter" selected>Painter</option>
+    </select>
+  </div>
 
-<div class="form-row">
-  <label>Short biography you'd like to have displayed:</label>
-  <br />
-  <textarea ng-model="vm.newArtist.biography"></textarea>
-</div>
+  <div class="form-row">
+    <label>Short biography you'd like to have displayed:</label>
+    <br />
+    <textarea ng-model="vm.newArtist.biography"></textarea>
+  </div>
 
-<div class="form-row">
-  <button ng-click="vm.postArtist()">Submit</button>
-</div>
+  <div class="form-row">
+    <button ng-click="vm.postArtist()">Submit</button>
+  </div>
+</div> <!-- this closes the form -->
+
+<div ng-if="!vm.blankForm">Thanks!</div>

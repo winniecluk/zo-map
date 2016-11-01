@@ -18,7 +18,11 @@
         controller: 'SignUpController as vm',
         templateUrl: 'templates/signup.html'
       })
-
+      .state('login', {
+        url: '/login',
+        controller: 'LogInController as vm',
+        templateUrl: 'templates/login.html'
+      })
     $urlRouterProvider.otherwise('/');
   }
 

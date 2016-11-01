@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var artistSchema = new Schema({
-  name: String,
+  f_name: String,
+  l_name: String,
   phone: String,
   email: String,
   website: String,
@@ -10,7 +11,8 @@ var artistSchema = new Schema({
   country: String,
   // have to pull country model and assign it that country id
   medium: String,
-  biography: String
+  biography: String,
+  approved: Boolean
 });
 
 // artist = artists.findById()
