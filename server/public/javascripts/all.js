@@ -11,7 +11,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   Routes.$inject = ['$stateProvider', '$urlRouterProvider'];
 
   function Routes($stateProvider, $urlRouterProvider){
-console.log('routes')
     $stateProvider
       .state('map', {
         url: '/',
@@ -33,20 +32,50 @@ console.log('routes')
   'use strict';
 
   angular.module('app')
+    .factory('CountriesService', CountriesService);
+
+  CountriesService.$inject = ['MapService', '$http'];
+
+  function CountriesService(MapService, $http){
+    var group_a = MapService.group_a;
+    var artistsArr = [];
+
+    function getCountries(cb){
+      $http.get('/api/countries').then(function(response){
+        response.data.forEach(function(country, countryIdx){
+          artistsArr.push(country);
+        });
+        group_a.forEach(function(el, idx, arr){
+          el.data('country', artistsArr[idx].name);
+          el.data('artists', artistsArr[idx].artists);
+        })
+        cb(artistsArr, group_a);
+      })
+    }
+
+    // function getArtistsArr () {
+    //   return artistsArr
+    // }
+
+    var service = {
+      getCountries: getCountries
+    }
+
+    return service;
+  }
+
+
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
     .factory('MapService', MapService);
 
   MapService.$inject = ['$http'];
 
   function MapService($http){
-    var service = {
-      artistsArr: artistsArr,
-      group_a: group_a,
-      artist: artist,
-      getCountries: getCountries
-    }
-
-    var artistsArr = [];
-    var artist;
 
     var rsr = Raphael('map', '1050', '700');
 
@@ -763,8 +792,7 @@ console.log('routes')
             .attr({id: 'ZW',title: 'Zimbabwe',class: 'land',parent: 'group_a','stroke-width': '0','stroke-opacity': '1','fill': '#000000'})
             .data({'id': 'ZW'});
 
-    group_a
-            .attr({'name': 'group_a'});
+    group_a.attr({'name': 'group_a'});
 
     group_a.push(
       AE ,
@@ -945,41 +973,33 @@ console.log('routes')
       ZW
     ); // this is the end of the push method on group_a
 
-    function getCountries(cb){
-      $http.get('/api/countries').then(function(response){
-        response.data.forEach(function(country, countryIdx){
-          console.log(country);
-          artistsArr.push(country);
-        });
-        group_a.forEach(function(el, idx, arr){
-          el.data('country', artistsArr[idx].name);
-          el.data('artists', artistsArr[idx].artists);
-        })
-        cb(artistsArr, group_a);
-      })
-    }
 
-    group_a.forEach(function(el, idx, arr){
-      el.node.addEventListener('mouseover', function(evt){
-        el.node.setAttribute('fill', 'gold');
-        document.querySelector('#identifier').innerHTML = el.data('country');
-      });
-      el.node.addEventListener('mouseleave', function(evt){
-        el.node.setAttribute('fill', 'black');
-        document.querySelector('#identifier').innerHTML = '';
-      });
-      el.node.addEventListener('click', function(evt){
-        var artists = el.data('artists');
-        if (artists){
-          artists.forEach(function(el, idx, arr){
-            var artistDiv = '<div>' + el.name + '</div>'
-            var phoneDiv = '<div>' + el.phone + '</div>'
-            output += artistDiv + phoneDiv;
-          })
-        }
-        document.querySelector('#console').innerHTML = output;
-      });
-    })
+
+    // group_a.forEach(function(el, idx, arr){
+    //   el.node.addEventListener('mouseover', function(evt){
+    //     el.node.setAttribute('fill', 'gold');
+    //     document.querySelector('#identifier').innerHTML = el.data('country');
+    //   });
+    //   el.node.addEventListener('mouseleave', function(evt){
+    //     el.node.setAttribute('fill', 'black');
+    //     document.querySelector('#identifier').innerHTML = '';
+    //   });
+    //   el.node.addEventListener('click', function(evt){
+    //     var artists = el.data('artists');
+    //     if (artists){
+    //       artists.forEach(function(el, idx, arr){
+    //         var artistDiv = '<div>' + el.name + '</div>'
+    //         var phoneDiv = '<div>' + el.phone + '</div>'
+    //         output += artistDiv + phoneDiv;
+    //       })
+    //     }
+    //     document.querySelector('#console').innerHTML = output;
+    //   });
+    // })
+
+    var service = {
+      group_a: group_a
+    }
 
     return service;
 
@@ -994,18 +1014,48 @@ console.log('routes')
   angular.module('app')
     .controller('MapController', MapController);
 
-  MapController.$inject = ['MapService', '$http'];
+  MapController.$inject = ['CountriesService', '$http', '$scope'];
 
-  function MapController(MapService, $http){
+  function MapController(CountriesService, $http, $scope){
     var vm = this;
     vm.title = 'hey there';
-    MapService.getCountries(function(artistsArr, group_a) {
+    vm.country = 'hello'
+    CountriesService.getCountries(function(artistsArr, group_a) {
       vm.artistsArr = artistsArr;
       vm.group_a = group_a;
-      console.log('this is artistsArr on controller ' + vm.artistsArr[0].name);
-    })
+      console.log('this is artistsArr on controller ' + vm.group_a[0]);
+      setUpEvtListeners(vm.group_a);
+    });
+
+    function setUpEvtListeners(arr){
+      arr.forEach(function(el, idx, arr){
+        addMouseover(el);
+        addMouseleave(el);
+      })
+    }
+
+    function addMouseover(el){
+      el.node.addEventListener('mouseover', function(evt){
+        this.setAttribute('fill', 'gold');
+        // console.log(el.data('country'));
+        vm.country = el.data('country');
+        $scope.$apply();
+        // console.log(vm.country);
+      })
+    }
 
 
+
+    // change detection, when any of the props change, will re-render, views update
+    // if i don't trigger change detection cycle, will do it manually
+    //
+
+    function addMouseleave(el){
+      el.node.addEventListener('mouseleave', function(evt){
+        this.setAttribute('fill', 'black');
+        vm.country = ''
+      })
+    }
 
   } // this closes MapController function
 

@@ -7,7 +7,6 @@
   Routes.$inject = ['$stateProvider', '$urlRouterProvider'];
 
   function Routes($stateProvider, $urlRouterProvider){
-console.log('routes')
     $stateProvider
       .state('map', {
         url: '/',
