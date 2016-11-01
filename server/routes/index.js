@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Country = require('../models/country');
-
+var token = require('../config/token')
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -14,9 +14,6 @@ var Country = require('../models/country');
 //   })
 // })
 
-router.post('/login', function(req, res, next){
-  console.log('i got the request');
-  res.send('ok');
-});
+router.post('/login', token.makeToken);
 
 module.exports = router;
