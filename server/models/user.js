@@ -6,6 +6,8 @@ var userSchema = new Schema({
   password: String
 })
 
+userSchema.plugin(require('mongoose-bcrypt'));
+
 // salt and hash password
 // UserSchema.pre('save', function(next){
 //   var user = this;
