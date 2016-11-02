@@ -21,7 +21,7 @@ artistSchema.methods.approve = function(cb) {
   self.approved = true;
   Country.findOne({name: self.country}, function(err, country){
     country.artists.push(self);
-    cb(err, self);
+    cb(err, self, country);
   }) // closes Country.findOne
 } // closes instance method
 

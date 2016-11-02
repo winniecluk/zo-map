@@ -26,9 +26,9 @@ router.put('/artists', function(req, res, next){
   console.log(req.query.id);
   Artist.findOne({_id: req.query.id}, function(err, artist){
     if (err) return next(err);
-    artist.approve(function(err, artist){
+    artist.approve(function(err, artist, country){
       if (err) return next(err);
-      res.json(artist);
+      res.json({artist, country});
     })
   })
   // console.log('artistId is this kind of data: ' + typeof(req.body.artistId));
