@@ -1,12 +1,12 @@
-// (function(){
-//   'use strict';
+(function(){
+  'use strict';
 
-//   angular.module('app')
-//     .config(config);
+  angular.module('app')
+    .config(config);
 
-//     config.$inject = ['$httpProvider'];
+    config.$inject = ['$httpProvider'];
 
-//     function config($httpProvider){
-//       $httpProvider.interceptors.push('InterceptorService');
-//     }
-// })
+    function config($httpProvider){
+      $httpProvider.interceptors.push('InterceptorService');
+    }
+})();

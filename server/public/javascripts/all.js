@@ -27,24 +27,35 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         controller: 'LogInController as vm',
         templateUrl: 'templates/login.html'
       })
+      .state('artists', {
+        url: '/artists',
+        resolve: {
+          LogInService: 'LogInService',
+          user: function(LogInService) {
+            return LogInService.getUser();
+          }
+        },
+        controller: 'ArtistsController as vm',
+        templateUrl: 'templates/artists.html'
+      })
     $urlRouterProvider.otherwise('/');
   }
 
 })();
 
 
-// (function(){
-//   'use strict';
+(function(){
+  'use strict';
 
-//   angular.module('app')
-//     .config(config);
+  angular.module('app')
+    .config(config);
 
-//     config.$inject = ['$httpProvider'];
+    config.$inject = ['$httpProvider'];
 
-//     function config($httpProvider){
-//       $httpProvider.interceptors.push('InterceptorService');
-//     }
-// })
+    function config($httpProvider){
+      $httpProvider.interceptors.push('InterceptorService');
+    }
+})();
 
 (function(){
   'use strict';
@@ -123,19 +134,31 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   function LogInService(TokenService, $http){
 
     function login(username, password){
-      console.log('click');
       return $http.post('/login', {username, password})
         .then(function(response){
+          console.log('service > then', response)
           TokenService.storeToken(response.data.token);
           var user = TokenService.decodeToken(response.data.token);
-          console.log(user);
           return user;
+        })
+        .catch(function (err) {
+          console.log('service > catch', err)
+          return Promise.reject('err')
+          // return "hello!"
         })
     }
 
-    var service = {
-      login: login
+    function getUser(){
+      var token = TokenService.getToken();
+      if (token){
+        var user = TokenService.decodeToken(token);
+        return user;
+      }
+    }
 
+    var service = {
+      login: login,
+      getUser: getUser
     }
 
     return service;
@@ -1142,13 +1165,26 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('LogInController', LogInController);
 
-  LogInController.$inject = ['$http', 'LogInService'];
+  LogInController.$inject = ['$http', 'LogInService', '$state'];
 
-  function LogInController($http, LogInService){
+  function LogInController($http, LogInService, $state){
     var vm = this;
-    vm.login = LogInService.login;
+    vm.login = logIn;
 
-
+    function logIn(username, password){
+      LogInService.login(vm.username, vm.password)
+        .then(function(user){
+          console.log('controller > then ', user)
+          console.log(user);
+          $state.go('artists');
+        })
+        .catch(function(err){
+          console.log("controller > catch", err)
+          vm.username = '';
+          vm.password = '';
+          console.log('login error');
+        })
+    } // closes logIn function
 
     // function login(username, password){
     //   $http.post('/login', {username, password})

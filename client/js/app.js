@@ -23,6 +23,17 @@
         controller: 'LogInController as vm',
         templateUrl: 'templates/login.html'
       })
+      .state('artists', {
+        url: '/artists',
+        resolve: {
+          LogInService: 'LogInService',
+          user: function(LogInService) {
+            return LogInService.getUser();
+          }
+        },
+        controller: 'ArtistsController as vm',
+        templateUrl: 'templates/artists.html'
+      })
     $urlRouterProvider.otherwise('/');
   }
 
