@@ -19,7 +19,8 @@ function makeToken(req, res, next){
       if (!user || !user.verifyPasswordSync(req.body.password)){
         return res.status(400).json({error: 'Bad credentials.'});
       }
-      var token = jwt.sign({user: user}, jwtSecret, jwtOptions);
+      console.log(user);
+      var token = jwt.sign({user: user.username}, jwtSecret, jwtOptions);
       return res.json({
         token: token
       })

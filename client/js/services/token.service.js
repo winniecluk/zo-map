@@ -21,7 +21,7 @@
     }
 
     function decodeToken(token){
-      return $window.atob(token.split('.')[1]);
+      return JSON.parse($window.atob(token.split('.')[1]));
     }
 
     var service = {

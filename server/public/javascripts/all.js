@@ -116,6 +116,37 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   'use strict';
 
   angular.module('app')
+    .factory('LogInService', LogInService);
+
+  LogInService.$inject = ['TokenService', '$http']
+
+  function LogInService(TokenService, $http){
+
+    function login(username, password){
+      console.log('click');
+      return $http.post('/login', {username, password})
+        .then(function(response){
+          TokenService.storeToken(response.data.token);
+          var user = TokenService.decodeToken(response.data.token);
+          console.log(user);
+          return user;
+        })
+    }
+
+    var service = {
+      login: login
+
+    }
+
+    return service;
+  }
+
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
     .factory('MapService', MapService);
 
   MapService.$inject = ['$http'];
@@ -1052,7 +1083,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
 })(); // this closes the IIFE
 
-
 (function(){
   'use strict';
 
@@ -1076,7 +1106,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     }
 
     function decodeToken(token){
-      return $window.atob(token.split('.')[1]);
+      return JSON.parse($window.atob(token.split('.')[1]));
     }
 
     var service = {
@@ -1112,23 +1142,25 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('LogInController', LogInController);
 
-  LogInController.$inject = ['$http', 'TokenService'];
+  LogInController.$inject = ['$http', 'LogInService'];
 
-  function LogInController($http, TokenService){
+  function LogInController($http, LogInService){
     var vm = this;
-    vm.login = login;
+    vm.login = LogInService.login;
 
-    function login(username, password){
-      $http.post('/login', {username, password})
-        .then(function(response){
-          console.log(response.data.token);
-          TokenService.storeToken(response.data.token);
-          vm.user = TokenService.decodeToken(response.data.token);
-          console.log(vm.user);
-        }, function(err){
-          console.log(err);
-        });
-    }
+
+
+    // function login(username, password){
+    //   $http.post('/login', {username, password})
+    //     .then(function(response){
+    //       console.log(response.data.token);
+    //       TokenService.storeToken(response.data.token);
+    //       vm.user = TokenService.decodeToken(response.data.token);
+    //       console.log(vm.user);
+    //     }, function(err){
+    //       console.log(err);
+    //     });
+    // }
 
   } // this closes the LogInController function
 
