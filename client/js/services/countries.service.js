@@ -13,8 +13,10 @@
     function getCountries(cb){
       $http.get('/api/countries').then(function(response){
         response.data.forEach(function(country, countryIdx){
+          if (country.name == 'United States'){
+            console.log(country);
+          }
           artistsArr.push(country);
-          console.log(country.name);
         });
         group_a.forEach(function(el, idx, arr){
           el.data('country', artistsArr[idx].name);

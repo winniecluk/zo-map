@@ -8,7 +8,9 @@ var token = require('../config/token')
 router.get('/countries', function(req, res, next){
   Country.find({})
     .sort({name: 1})
+    .populate('artists')
     .exec(function(err, countries){
+      if (err) return next(err);
       res.status(200).json(countries);
     });
 })

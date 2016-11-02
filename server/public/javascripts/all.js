@@ -100,8 +100,10 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function getCountries(cb){
       $http.get('/api/countries').then(function(response){
         response.data.forEach(function(country, countryIdx){
+          if (country.name == 'United States'){
+            console.log(country);
+          }
           artistsArr.push(country);
-          console.log(country.name);
         });
         group_a.forEach(function(el, idx, arr){
           el.data('country', artistsArr[idx].name);
@@ -1247,9 +1249,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
     function setUpEvtListeners(arr){
       arr.forEach(function(el, idx, arr){
+        addClickEvt(el);
         addMouseover(el);
         addMouseleave(el);
-        addClickEvt(el);
       })
     }
 
@@ -1277,6 +1279,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
+        console.log(el.data('artists'));
         vm.countryArtist = el.data('artists');
       })
     }

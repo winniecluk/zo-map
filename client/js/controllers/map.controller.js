@@ -18,9 +18,9 @@
 
     function setUpEvtListeners(arr){
       arr.forEach(function(el, idx, arr){
+        addClickEvt(el);
         addMouseover(el);
         addMouseleave(el);
-        addClickEvt(el);
       })
     }
 
@@ -48,6 +48,7 @@
 
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
+        console.log(el.data('artists'));
         vm.countryArtist = el.data('artists');
       })
     }
