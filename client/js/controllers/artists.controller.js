@@ -17,7 +17,11 @@
       });
 
     function approveArtist(artist){
-
+      console.log('click approveArtist');
+      $http.put(`api/artists?approve=true&id=${artist._id}`)
+        .then(function(response){
+          console.log(response);
+        });
     }
 
     function rejectArtist(artist){
