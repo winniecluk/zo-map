@@ -10,6 +10,12 @@ router.get('/countries', function(req, res, next){
   })
 })
 
+router.get('/artists', function(req, res, next){
+  Artist.find({}, function(err, artists){
+    res.status(200).json(artists);
+  })
+})
+
 router.post('/artists', function(req, res, next){
   Artist.create(req.body.newArtist, function(err, artist){
       res.status(201).send(artist);
