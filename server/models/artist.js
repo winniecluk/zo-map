@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Country = require('./country.js');
 
 var artistSchema = new Schema({
   f_name: String,
@@ -14,6 +15,15 @@ var artistSchema = new Schema({
   biography: String,
   approved: Boolean
 });
+
+artistSchema.methods.approve = function(cb) {
+  var self = this;
+  self.approved = true;
+  Country.findOne({name: self.country}, function(err, country){
+    country.artists.push(self);
+    cb(err, self);
+  }) // closes Country.findOne
+} // closes instance method
 
 // artist = artists.findById()
 // artist.populate('country')
