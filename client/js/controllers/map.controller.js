@@ -49,7 +49,6 @@
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
         vm.countryArtist = el.data('artists');
-        console.log(vm.countryArtist);
       })
     }
 

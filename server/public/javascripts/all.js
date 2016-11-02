@@ -54,10 +54,12 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   function ArtistsService($http){
 
     function getArtists(){
-      $http.get('/artists', function(response){
-        console.log(response);
+      return $http.get('/api/artists')
+        .then(function(response){
+        // console.log(response.data);
+        return response.data;
       })
-    }
+    } // close getArtists
 
     var service = {
       getArtists: getArtists
@@ -162,13 +164,13 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function login(username, password){
       return $http.post('/login', {username, password})
         .then(function(response){
-          console.log('service > then', response)
+          // console.log('service > then', response)
           TokenService.storeToken(response.data.token);
           var user = TokenService.decodeToken(response.data.token);
           return user;
         })
         .catch(function (err) {
-          console.log('service > catch', err)
+          // console.log('service > catch', err)
           return Promise.reject('err')
           // return "hello!"
         })
@@ -1175,11 +1177,25 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('ArtistsController', ArtistsController);
 
-  ArtistsController.$inject = ['$http'];
+  ArtistsController.$inject = ['ArtistsService', '$http'];
 
-  function ArtistsController($http){
+  function ArtistsController(ArtistsService, $http){
     var vm = this;
+    vm.approveArtist = approveArtist;
+    vm.rejectArtist = rejectArtist;
 
+    ArtistsService.getArtists()
+      .then(function(artists){
+        vm.artists = artists;
+      });
+
+    function approveArtist(artist){
+
+    }
+
+    function rejectArtist(artist){
+
+    }
 
   }
 
@@ -1201,7 +1217,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       LogInService.login(vm.username, vm.password)
         .then(function(user){
           console.log('controller > then ', user)
-          console.log(user);
           $state.go('artists');
         })
         .catch(function(err){
@@ -1279,7 +1294,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
         vm.countryArtist = el.data('artists');
-        console.log(vm.countryArtist);
       })
     }
 

@@ -30,6 +30,11 @@ function makeToken(req, res, next){
   // this closes the if/else
 } // this closes the makeToken function
 
+function checkToken(){
+  // console.log(req.get('Authorization'));
+}
+
 module.exports = {
-  makeToken: makeToken
+  makeToken: makeToken,
+  checkToken: checkToken
 }

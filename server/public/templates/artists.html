@@ -1,2 +1,17 @@
 Welcome, person!
 
+<div ng-repeat="artist in vm.artists">
+  <div>
+  {{artist.f_name}}
+  {{artist.l_name}}
+  </div>
+  {{artist.phone}}
+  {{artist.email}}
+  {{artist.website}}
+  {{artist.city}}
+  {{artist.country}}
+  {{artist.medium}}
+  {{artist.biography}}
+  <button ng-click="vm.approveArtist(artist)">Approve Artist</button>
+  <button ng-click="vm.rejectArtist(artist)">Reject Artist</button>
+</div>

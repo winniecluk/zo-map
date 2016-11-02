@@ -14,7 +14,6 @@
       LogInService.login(vm.username, vm.password)
         .then(function(user){
           console.log('controller > then ', user)
-          console.log(user);
           $state.go('artists');
         })
         .catch(function(err){

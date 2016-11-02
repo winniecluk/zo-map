@@ -9,10 +9,12 @@
   function ArtistsService($http){
 
     function getArtists(){
-      $http.get('/artists', function(response){
-        console.log(response);
+      return $http.get('/api/artists')
+        .then(function(response){
+        // console.log(response.data);
+        return response.data;
       })
-    }
+    } // close getArtists
 
     var service = {
       getArtists: getArtists
