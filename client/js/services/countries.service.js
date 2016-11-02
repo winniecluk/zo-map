@@ -14,6 +14,7 @@
       $http.get('/api/countries').then(function(response){
         response.data.forEach(function(country, countryIdx){
           artistsArr.push(country);
+          console.log(country.name);
         });
         group_a.forEach(function(el, idx, arr){
           el.data('country', artistsArr[idx].name);

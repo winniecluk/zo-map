@@ -5,708 +5,532 @@ var Country = require('./models/country');
 Country.remove({})
   .then(function(){
     var AE = new Country({
-      name: 'United Arab Emirates',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'United Arab Emirates'
     });
     var AF = new Country({
-      name: 'Afghanistan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Afghanistan'
     });
     var AL = new Country({
-      name: 'Albania',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Albania'
     });
     var AM = new Country({
-      name: 'Armenia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Armenia'
     });
     var AO = new Country({
-      name: 'Angola',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Angola'
     });
     var AR = new Country({
-      name: 'Argentina',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Argentina'
     });
     var AT = new Country({
-      name: 'Austria',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Austria'
     });
     var AU = new Country({
-      name: 'Australia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Australia'
     });
     var AZ = new Country({
-      name: 'Azerbaijan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Azerbaijan'
     });
     var BA = new Country({
-      name: 'Bosnia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Bosnia'
     });
     var BD = new Country({
-      name: 'Bangladesh',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Bangladesh'
     });
     var BE = new Country({
-      name: 'Belgium',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Belgium'
     });
     var BF = new Country({
-      name: 'Burkina Faso',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Burkina Faso'
     });
     var BG = new Country({
-      name: 'Bulgaria',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Bulgaria'
     });
     var BI = new Country({
-      name: 'Burundi',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Burundi'
     });
     var BJ = new Country({
-      name: 'Benin',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Benin'
     });
     var BN = new Country({
-      name: 'Brunei Darussalam',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Brunei Darussalam'
     });
     var BO = new Country({
-      name: 'Bolivia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Bolivia'
     });
     var BR = new Country({
-      name: 'Brazil',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Brazil'
     });
     var BS = new Country({
-      name: 'Bahamas',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Bahamas'
     });
     var BT = new Country({
-      name: 'Bhutan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Bhutan'
     });
     var BW = new Country({
-      name: 'Botswana',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Botswana'
     });
     var BY = new Country({
-      name: 'Belarus',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Belarus'
     });
     var BZ = new Country({
-      name: 'Belize',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Belize'
     });
     var CA = new Country({
-      name: 'Canada',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Canada'
     });
     var CD = new Country({
-      name: 'Democratic Republic of Congo',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Democratic Republic of Congo'
     });
     var CF = new Country({
-      name: 'Central African Republic',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Central African Republic'
     });
     var CG = new Country({
-      name: 'Republic of Congo',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Republic of Congo'
     });
     var CH = new Country({
-      name: 'Switzerland',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Switzerland'
     });
     var CI = new Country({
-      name: 'Côte d\'Ivoire',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Côte d\'Ivoire'
     });
     var CL = new Country({
-      name: 'Chile',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Chile'
     });
     var CM = new Country({
-      name: 'Cameroon',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Cameroon'
     });
     var CN = new Country({
-      name: 'China',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'China'
     });
     var CO = new Country({
-      name: 'Colombia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Colombia'
     });
     var CR = new Country({
-      name: 'Costa Rica',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Costa Rica'
     });
     var CU = new Country({
-      name: 'Cuba',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Cuba'
     });
     var CY = new Country({
-      name: 'Cyprus',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Cyprus'
     });
     var CZ = new Country({
-      name: 'Czech Republic',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Czech Republic'
     });
     var DE = new Country({
-      name: 'Germany',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Germany'
     });
     var DJ = new Country({
-      name: 'Djibouti',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Djibouti'
     });
     var DK = new Country({
-      name: 'Denmark',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Denmark'
     });
     var DO = new Country({
-      name: 'Dominican Republic',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Dominican Republic'
     });
     var DZ = new Country({
-      name: 'Algeria',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Algeria'
     });
     var EC = new Country({
-      name: 'Ecuador',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Ecuador'
     });
     var EE = new Country({
-      name: 'Estonia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Estonia'
     });
     var EG = new Country({
-      name: 'Egypt',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Egypt'
     });
     var EH = new Country({
-      name: 'Western Sahara',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Western Sahara'
     });
     var ER = new Country({
-      name: 'Eritrea',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Eritrea'
     });
     var ES = new Country({
-      name: 'Spain',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Spain'
     });
     var ET = new Country({
-      name: 'Ethiopia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Ethiopia'
     });
     var FK = new Country({
-      name: 'Falkland Islands',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Falkland Islands'
     });
     var FI = new Country({
-      name: 'Finland',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Finland'
     });
     var FJ = new Country({
-      name: 'Fiji',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Fiji'
     });
     var FR = new Country({
-      name: 'France',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'France'
     });
     var GA = new Country({
-      name: 'Gabon',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Gabon'
     });
     var GB = new Country({
-      name: 'United Kingdom',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'United Kingdom'
     });
     var GE = new Country({
-      name: 'Georgia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Georgia'
     });
     var GF = new Country({
-      name: 'French Guiana',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'French Guiana'
     });
     var GH = new Country({
-      name: 'Ghana',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Ghana'
     });
     var GL = new Country({
-      name: 'Greenland',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Greenland'
     });
     var GM = new Country({
-      name: 'Gambia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Gambia'
     });
     var GN = new Country({
-      name: 'Guinea',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Guinea'
     });
     var GQ = new Country({
-      name: 'Equatorial Guinea',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Equatorial Guinea'
     });
     var GR = new Country({
-      name: 'Greece',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Greece'
     });
     var GT = new Country({
-      name: 'Guatemala',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Guatemala'
     });
     var GW = new Country({
-      name: 'Guinea-Bissau',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Guinea-Bissau'
     });
     var GY = new Country({
-      name: 'Guyana',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Guyana'
     });
     var HN = new Country({
-      name: 'Honduras',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Honduras'
     });
     var HR = new Country({
-      name: 'Croatia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Croatia'
     });
     var HT = new Country({
-      name: 'Haiti',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Haiti'
     });
     var HU = new Country({
-      name: 'Hungary',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Hungary'
     });
     var ID = new Country({
-      name: 'Indonesia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Indonesia'
     });
     var IE = new Country({
-      name: 'Ireland',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Ireland'
     });
     var IL = new Country({
-      name: 'Israel',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Israel'
     });
     var IN = new Country({
-      name: 'India',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'India'
     });
     var IQ = new Country({
-      name: 'Iraq',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Iraq'
     });
     var IR = new Country({
-      name: 'Iran',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Iran'
     });
     var IS = new Country({
-      name: 'Iceland',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Iceland'
     });
     var IT = new Country({
-      name: 'Italy',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Italy'
     });
     var JM = new Country({
-      name: 'Jamaica',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Jamaica'
     });
     var JO = new Country({
-      name: 'Jordan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Jordan'
     });
     var JP = new Country({
-      name: 'Japan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Japan'
     });
     var KE = new Country({
-      name: 'Kenya',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Kenya'
     });
     var KG = new Country({
-      name: 'Kyrgyzstan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Kyrgyzstan'
     });
     var KH = new Country({
-      name: 'Cambodia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Cambodia'
     });
     var KP = new Country({
-      name: 'North Korea',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'North Korea'
     });
     var KR = new Country({
-      name: 'South Korea',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'South Korea'
     });
     var KX = new Country({
-      name: 'Kosovo',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Kosovo'
     });
     var KW = new Country({
-      name: 'Kuwait',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Kuwait'
     });
     var KZ = new Country({
-      name: 'Kazakhstan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Kazakhstan'
     });
     var LA = new Country({
-      name: 'Lao People\'s Democratic Republic',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Lao People\'s Democratic Republic'
     });
     var LB = new Country({
-      name: 'Lebanon',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Lebanon'
     });
     var LK = new Country({
-      name: 'Sri Lanka',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Sri Lanka'
     });
     var LR = new Country({
-      name: 'Liberia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Liberia'
     });
     var LS = new Country({
-      name: 'Lesotho',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Lesotho'
     });
     var LT = new Country({
-      name: 'Lithuania',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Lithuania'
     });
     var LU = new Country({
-      name: 'Luxembourg',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Luxembourg'
     });
     var LV = new Country({
-      name: 'Latvia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Latvia'
     });
     var LY = new Country({
-      name: 'Libya',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Libya'
     });
     var MA = new Country({
-      name: 'Morocco',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Morocco'
     });
     var MD = new Country({
-      name: 'Moldova',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Moldova'
     });
     var ME = new Country({
-      name: 'Montenegro',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Montenegro'
     });
     var MG = new Country({
-      name: 'Madagascar',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Madagascar'
     });
     var MK = new Country({
-      name: 'Macedonia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Macedonia'
     });
     var ML = new Country({
-      name: 'Mali',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Mali'
     });
     var MM = new Country({
-      name: 'Myanmar',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Myanmar'
     });
     var MN = new Country({
-      name: 'Mongolia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Mongolia'
     });
     var MR = new Country({
-      name: 'Mauritania',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Mauritania'
     });
     var MW = new Country({
-      name: 'Malawi',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Malawi'
     });
     var MX = new Country({
-      name: 'Mexico',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Mexico'
     });
     var MY = new Country({
-      name: 'Malaysia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Malaysia'
     });
     var MZ = new Country({
-      name: 'Mozambique',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Mozambique'
     });
     var NA = new Country({
-      name: 'Namibia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Namibia'
     });
     var NC = new Country({
-      name: 'New Caledonia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'New Caledonia'
     });
     var NE = new Country({
-      name: 'Niger',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Niger'
     });
     var NG = new Country({
-      name: 'Nigeria',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Nigeria'
     });
     var NI = new Country({
-      name: 'Nicaragua',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Nicaragua'
     });
     var NL = new Country({
-      name: 'Netherlands',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Netherlands'
     });
     var NO = new Country({
-      name: 'Norway',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Norway'
     });
     var NP = new Country({
-      name: 'Nepal',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Nepal'
     });
     var NZ = new Country({
-      name: 'New Zealand',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'New Zealand'
     });
     var OM = new Country({
-      name: 'Oman',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Oman'
     });
     var PA = new Country({
-      name: 'Panama',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Panama'
     });
     var PE = new Country({
-      name: 'Peru',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Peru'
     });
     var PG = new Country({
-      name: 'Papau New Guinea',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Papau New Guinea'
     });
     var PH = new Country({
-      name: 'Philippines',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Philippines'
     });
     var PK = new Country({
-      name: 'Pakistan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Pakistan'
     });
     var PL = new Country({
-      name: 'Poland',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Poland'
     });
     var PR = new Country({
-      name: 'Puerto Rico',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Puerto Rico'
     });
     var PS = new Country({
-      name: 'Palestinian Territories',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Palestinian Territories'
     });
     var PT = new Country({
-      name: 'Portugal',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Portugal'
     });
     var PY = new Country({
-      name: 'Paraguay',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Paraguay'
     });
     var QA = new Country({
-      name: 'Qatar',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Qatar'
     });
     var RO = new Country({
-      name: 'Romania',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Romania'
     });
     var RS = new Country({
-      name: 'Serbia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Serbia'
     });
     var RU = new Country({
-      name: 'Russia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Russia'
     });
     var RW = new Country({
-      name: 'Rwanda',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Rwanda'
     });
     var SA = new Country({
-      name: 'Saudi Arabia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Saudi Arabia'
     });
     var SB = new Country({
-      name: 'Solomon Islands',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Solomon Islands'
     });
     var SD = new Country({
-      name: 'Sudan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Sudan'
     });
     var SE = new Country({
-      name: 'Sweden',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Sweden'
     });
     var SI = new Country({
-      name: 'Slovenia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Slovenia'
     });
     var SJ = new Country({
-      name: 'Svalbard and Jan Mayen',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Svalbard and Jan Mayen'
     });
     var SK = new Country({
-      name: 'Slovakia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Slovakia'
     });
     var SL = new Country({
-      name: 'Sierra Leone',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Sierra Leone'
     });
     var SN = new Country({
-      name: 'Senegal',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Senegal'
     });
     var SO = new Country({
-      name: 'Somalia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Somalia'
     });
     var SR = new Country({
-      name: 'Suriname',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Suriname'
     });
     var SS = new Country({
-      name: 'South Sudan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'South Sudan'
     });
     var SV = new Country({
-      name: 'El Salvador',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'El Salvador'
     });
     var SY = new Country({
-      name: 'Syria',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Syria'
     });
     var SZ = new Country({
-      name: 'Swaziland',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Swaziland'
     });
     var TD = new Country({
-      name: 'Chad',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Chad'
     });
     var TF = new Country({
-      name: 'French Southern and Antarctic Lands',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'French Southern and Antarctic Lands'
     });
     var TG = new Country({
-      name: 'Togo',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Togo'
     });
     var TH = new Country({
-      name: 'Thailand',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Thailand'
     });
     var TJ = new Country({
-      name: 'Tajikistan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Tajikistan'
     });
     var TL = new Country({
-      name: 'Timor-Leste',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Timor-Leste'
     });
     var TM = new Country({
-      name: 'Turkmenistan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Turkmenistan'
     });
     var TN = new Country({
-      name: 'Tunisia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Tunisia'
     });
     var TR = new Country({
-      name: 'Turkey',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Turkey'
     });
     var TT = new Country({
-      name: 'Trinidad and Tobago',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Trinidad and Tobago'
     });
     var TW = new Country({
-      name: 'Taiwan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Taiwan'
     });
     var TZ = new Country({
-      name: 'Tanzania',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Tanzania'
     });
     var UA = new Country({
-      name: 'Ukraine',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Ukraine'
     });
     var UG = new Country({
-      name: 'Uganda',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Uganda'
     });
     var US = new Country({
-      name: 'United States',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'United States'
     });
     var UY = new Country({
-      name: 'Uruguay',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Uruguay'
     });
     var UZ = new Country({
-      name: 'Uzbekistan',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Uzbekistan'
     });
     var VE = new Country({
-      name: 'Venezuela',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Venezuela'
     });
     var VN = new Country({
-      name: 'Vietnam',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Vietnam'
     });
     var VU = new Country({
-      name: 'Vanuatu',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Vanuatu'
     });
     var YE = new Country({
-      name: 'Yemen',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Yemen'
     });
     var ZA = new Country({
-      name: 'South Africa',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'South Africa'
     });
     var ZM = new Country({
-      name: 'Zambia',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Zambia'
     });
     var ZW = new Country({
-      name: 'Zimbabwe',
-      artists: [{name: 'SampleName', phone: 'SamplePhone'}]
+      name: 'Zimbabwe'
     });
     return Promise.all([
       AE.save(),
