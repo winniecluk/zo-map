@@ -13,20 +13,20 @@ var artistSchema = new Schema({
   // have to pull country model and assign it that country id
   medium: String,
   biography: String,
-  approved: Boolean
+  approved: {type: Number, default: 0}
 });
 
 artistSchema.methods.approve = function(cb) {
   var self = this;
-  self.approved = true;
   Country.findOne({name: self.country}, function(err, country){
-    country.artists.push(self);
-    country.save();
+    if (!country.artists.includes(self._id)){ // this does not work yet
+      self.approved = 1;
+      self.save();
+      country.artists.push(self);
+      country.save();
+    }
     cb(err, self, country);
   }) // closes Country.findOne
 } // closes instance method
-
-// artist = artists.findById()
-// artist.populate('country')
 
 module.exports = mongoose.model('Artist', artistSchema);

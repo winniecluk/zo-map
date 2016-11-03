@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Country = require('../models/country');
 var Artist = require('../models/artist');
-var token = require('../config/token')
+var token = require('../config/token');
 
 
 router.get('/countries', function(req, res, next){
@@ -24,17 +24,21 @@ router.get('/artists', function(req, res, next){
 })
 
 router.put('/artists', function(req, res, next){
-  console.log(req.query.approve);
-  console.log(req.query.id);
   Artist.findOne({_id: req.query.id}, function(err, artist){
     if (err) return next(err);
     artist.approve(function(err, artist, country){
       if (err) return next(err);
       res.json({artist, country});
-    })
-  })
-  // console.log('artistId is this kind of data: ' + typeof(req.body.artistId));
-  // now I want to update the artist status
+    }) // this closes the custom method
+  }) // this closes findOne
+}) // this closes route
+
+router.put('/artists/reject/:id', function(req, res, next){
+  console.log(req.params);
+  Artist.findByIdAndUpdate(req.params.id, { $set: {approved: 2} }, function(err, artist){
+    console.log(artist);
+    res.json(artist);
+  });
 })
 
 router.post('/artists', function(req, res, next){
