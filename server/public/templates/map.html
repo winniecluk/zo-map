@@ -1,15 +1,14 @@
-<nav>
-  <a ui-sref="map">Artists' Map</a><a ui-sref="signup">Sign Up</a>
-</nav>
-  <div id="container">
-    <div id="map">
-    </div>
-    <div id="identifier">
-      {{vm.country}}
-    </div>
+  <div class="strong">ZO Artists' Map</div>
+  <div id="map">
   </div>
-<input type="text" ng-model="vm.searchInput"><button ng-click="vm.submitSearch(vm.searchInput)">Submit</button>
-<div id="console">
-  <div>{{vm.selectedCountry}}</div>
-  <div ng-repeat="artist in vm.countryArtists track by $index" ng-if="artist.approved">{{artist.f_name}} - {{artist.phone}}</div>
-</div>
+  <div id="identifier">
+    {{vm.country}}
+  </div>
+
+<search>
+  <input type="text" ng-model="vm.searchInput"><button ng-click="vm.submitSearch(vm.searchInput)">Submit</button>
+  <div id="console">
+    <div>{{vm.selectedCountry}}</div>
+    <div ng-repeat="artist in vm.countryArtists track by $index" ng-if="artist.approved">{{artist.f_name}} - {{artist.phone}}</div>
+  </div>
+</search>

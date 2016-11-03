@@ -181,7 +181,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.submitSearch = submitSearch
 
     function submitSearch(input){
-      // test the below
       var searchableWord = makeSearchableWord(input);
       var idx = vm.artistsArr.map(function(el){
         return el.name;
@@ -218,30 +217,25 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
     function addMouseover(el){
       el.node.addEventListener('mouseover', function(evt){
-        this.setAttribute('fill', 'gold');
-        vm.country = el.data('country');
-        $scope.$apply();
+        $scope.$apply(function(){
+          el.node.setAttribute('fill', 'gold');
+          vm.country = el.data('country');
+        });
       })
     }
 
-
-
-    // change detection, when any of the props change, will re-render, views update
-    // if i don't trigger change detection cycle, will do it manually
-    //
-
     function addMouseleave(el){
       el.node.addEventListener('mouseleave', function(evt){
-        this.setAttribute('fill', 'black');
-        vm.country = ''
-        $scope.$apply();
+        $scope.$apply(function(){
+          el.node.setAttribute('fill', 'black');
+          vm.country = ''
+        })
       })
     }
 
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
         $scope.$apply(function() {
-          console.log(el.data('artists'));
           vm.countryArtists = el.data('artists');
           vm.selectedCountry = el.data('country');
         });
