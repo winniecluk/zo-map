@@ -8,7 +8,30 @@
 
   function MapController(CountriesService, $http, $scope){
     var vm = this;
-    vm.title = 'hey there';
+    vm.searchInput;
+    vm.submitSearch = submitSearch
+
+    function submitSearch(input){
+      // test the below
+      var searchableWord = makeSearchableWord(input);
+      var idx = vm.artistsArr.map(function(el){
+        return el.name;
+      }).indexOf(searchableWord);
+      vm.selectedCountry = vm.artistsArr[idx].name;
+      vm.countryArtist = vm.artistsArr[idx].artists;
+    }
+
+    function makeSearchableWord(str){
+      var strArr = str.split(' ');
+      var newArr = strArr.map(function(el, idx){
+        if (el != 'of' && el != 'and'){
+          return el.charAt(0).toUpperCase() + el.slice(1);
+        } else {
+          return el;
+        }
+      })
+      return newArr.join(' ');
+    }
 
     CountriesService.getCountries(function(artistsArr, group_a) {
       vm.artistsArr = artistsArr;
@@ -50,6 +73,7 @@
       el.node.addEventListener('click', function(evt){
         console.log(el.data('artists'));
         vm.countryArtist = el.data('artists');
+        vm.selectedCountry = el.data('country');
       })
     }
 

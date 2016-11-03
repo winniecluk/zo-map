@@ -4,6 +4,8 @@
 <div id="map">
 </div>
 <div style="top-margin: -50px" id="identifier">{{vm.country}}</div>
+<input type="text" ng-model="vm.searchInput"><button ng-click="vm.submitSearch(vm.searchInput)">Submit</button>
 <div id="console">
-  <div ng-repeat="artist in vm.countryArtist" ng-if="artist.approved">{{artist.f_name}} - {{artist.phone}}</div>
+  <div>{{vm.selectedCountry}}</div>
+  <div ng-repeat="artist in vm.countryArtist track by $index" ng-if="artist.approved">{{artist.f_name}} - {{artist.phone}}</div>
 </div>
