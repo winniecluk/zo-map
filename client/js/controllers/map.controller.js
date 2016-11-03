@@ -18,7 +18,7 @@
         return el.name;
       }).indexOf(searchableWord);
       vm.selectedCountry = vm.artistsArr[idx].name;
-      vm.countryArtist = vm.artistsArr[idx].artists;
+      vm.countryArtists = vm.artistsArr[idx].artists;
     }
 
     function makeSearchableWord(str){
@@ -72,7 +72,7 @@
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
         console.log(el.data('artists'));
-        vm.countryArtist = el.data('artists');
+        vm.countryArtists = el.data('artists');
         vm.selectedCountry = el.data('country');
       })
     }

@@ -8,8 +8,13 @@ body {
   font: 1em "Open Sans", sans-serif
 }
 
-#map {
+#container {
+  border: 1px solid blue;
   position: relative;
+}
+
+#map {
+/*  position: absolute;*/
   background-color: dodgerblue;
   width: 1050px;
   height: 700px;
@@ -17,13 +22,13 @@ body {
 }
 
 #identifier {
-  position: absolute;
+  margin: 0 auto;
   text-align: center;
-  width: 1050px;
-/*  left: 460px;*/
-  bottom: 60px;
+/*  width: 1050px;*/
+  left: 0px;
   color: white;
   font-size: 3em;
+  height: 60px;
 }
 
 #console {
@@ -35,6 +40,16 @@ nav {
   text-align: right;
   font-weight: bold;
   font-size: 2em;
+}
+
+input[type=text] {
+  height: 30px;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+
+input[type=text]:focus {
+  border: 3px solid blue;
 }
 
 /* for sign-up form */

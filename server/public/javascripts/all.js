@@ -6,26 +6,40 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   'use strict';
 
   angular.module('app', ['ui.router'])
-    .config(Routes);
+    .config(Routes)
+    .run(run);
 
   Routes.$inject = ['$stateProvider', '$urlRouterProvider'];
+  run.$inject = ['$rootScope', 'LogInService', '$state'];
+
+  function run ($rootScope, LogInService, $state){
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams){
+      if (toState.authReq && !LogInService.getUser()){
+        event.preventDefault();
+        $state.go('login');
+      }
+    })
+  }
 
   function Routes($stateProvider, $urlRouterProvider){
     $stateProvider
       .state('map', {
         url: '/',
         controller: 'MapController as vm',
-        templateUrl: 'templates/map.html'
+        templateUrl: 'templates/map.html',
+        authReq: false
       })
       .state('signup', {
         url: '/signup',
         controller: 'SignUpController as vm',
-        templateUrl: 'templates/signup.html'
+        templateUrl: 'templates/signup.html',
+        authReq: false
       })
       .state('login', {
         url: '/login',
         controller: 'LogInController as vm',
-        templateUrl: 'templates/login.html'
+        templateUrl: 'templates/login.html',
+        authReq: false
       })
       .state('artists', {
         url: '/artists',
@@ -36,7 +50,8 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
           }
         },
         controller: 'ArtistsController as vm',
-        templateUrl: 'templates/artists.html'
+        templateUrl: 'templates/artists.html',
+        authReq: true
       })
     $urlRouterProvider.otherwise('/');
   }
@@ -172,7 +187,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         return el.name;
       }).indexOf(searchableWord);
       vm.selectedCountry = vm.artistsArr[idx].name;
-      vm.countryArtist = vm.artistsArr[idx].artists;
+      vm.countryArtists = vm.artistsArr[idx].artists;
     }
 
     function makeSearchableWord(str){
@@ -226,7 +241,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
         console.log(el.data('artists'));
-        vm.countryArtist = el.data('artists');
+        vm.countryArtists = el.data('artists');
         vm.selectedCountry = el.data('country');
       })
     }
