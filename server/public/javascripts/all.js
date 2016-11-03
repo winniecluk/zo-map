@@ -6,26 +6,40 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   'use strict';
 
   angular.module('app', ['ui.router'])
-    .config(Routes);
+    .config(Routes)
+    .run(run);
 
   Routes.$inject = ['$stateProvider', '$urlRouterProvider'];
+  run.$inject = ['$rootScope', 'LogInService', '$state'];
+
+  function run ($rootScope, LogInService, $state){
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams){
+      if (toState.authReq && !LogInService.getUser()){
+        event.preventDefault();
+        $state.go('login');
+      }
+    })
+  }
 
   function Routes($stateProvider, $urlRouterProvider){
     $stateProvider
       .state('map', {
         url: '/',
         controller: 'MapController as vm',
-        templateUrl: 'templates/map.html'
+        templateUrl: 'templates/map.html',
+        authReq: false
       })
       .state('signup', {
         url: '/signup',
         controller: 'SignUpController as vm',
-        templateUrl: 'templates/signup.html'
+        templateUrl: 'templates/signup.html',
+        authReq: false
       })
       .state('login', {
         url: '/login',
         controller: 'LogInController as vm',
-        templateUrl: 'templates/login.html'
+        templateUrl: 'templates/login.html',
+        authReq: false
       })
       .state('artists', {
         url: '/artists',
@@ -36,10 +50,223 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
           }
         },
         controller: 'ArtistsController as vm',
-        templateUrl: 'templates/artists.html'
+        templateUrl: 'templates/artists.html',
+        authReq: true
       })
     $urlRouterProvider.otherwise('/');
   }
+
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
+    .controller('ArtistsController', ArtistsController);
+
+  ArtistsController.$inject = ['ArtistsService', '$http'];
+
+  function ArtistsController(ArtistsService, $http){
+    var vm = this;
+    vm.artistsAlerts = [];
+    vm.approveArtist = approveArtist;
+    vm.rejectArtist = rejectArtist;
+    vm.popAlert = popAlert;
+    vm.pendingArtists = [];
+    vm.approvedArtists = [];
+    vm.rejectedArtists = [];
+
+    function popAlert(){
+      vm.artistsAlerts.pop();
+    }
+
+    ArtistsService.getArtists()
+      .then(function(artists){
+        artists.forEach(function(el){
+          if (el.approved == 0){
+            vm.pendingArtists.push(el);
+          }
+          if (el.approved == 1){
+            vm.approvedArtists.push(el);
+          }
+          if (el.approved == 2){
+            vm.rejectedArtists.push(el);
+          }
+        })
+        vm.artists = artists;
+        // console.log(artists);
+      });
+
+    function approveArtist(artist){
+      console.log('click approveArtist');
+      vm.artistsAlerts.push(1);
+      $http.put(`api/artists?approve=true&id=${artist._id}`)
+        .then(function(response){
+          console.log(response);
+        });
+      var index = vm.pendingArtists.indexOf(artist);
+      vm.pendingArtists.splice(index, 1);
+      vm.approvedArtists.push(artist);
+    }
+
+    function rejectArtist(artist){
+      console.log('click rejectArtist');
+      // $http.put(`api/artists/reject/${artist._id}`)
+      $http.put(`api/artists/reject?id=${artist._id}`)
+        .then(function(response){
+          console.log(response);
+        });
+      var index = vm.pendingArtists.indexOf(artist);
+      vm.pendingArtists.splice(index, 1);
+      vm.rejected
+    } // this closes rejectArtist function
+
+  }
+
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
+    .controller('LogInController', LogInController);
+
+  LogInController.$inject = ['$http', 'LogInService', '$state'];
+
+  function LogInController($http, LogInService, $state){
+    var vm = this;
+    vm.login = logIn;
+
+    function logIn(username, password){
+      LogInService.login(vm.username, vm.password)
+        .then(function(user){
+          console.log('controller > then ', user)
+          $state.go('artists');
+        })
+        .catch(function(err){
+          console.log("controller > catch", err)
+          vm.username = '';
+          vm.password = '';
+          console.log('login error');
+        })
+    } // closes logIn function
+
+    // function login(username, password){
+    //   $http.post('/login', {username, password})
+    //     .then(function(response){
+    //       console.log(response.data.token);
+    //       TokenService.storeToken(response.data.token);
+    //       vm.user = TokenService.decodeToken(response.data.token);
+    //       console.log(vm.user);
+    //     }, function(err){
+    //       console.log(err);
+    //     });
+    // }
+
+  } // this closes the LogInController function
+
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
+    .controller('MapController', MapController);
+
+  MapController.$inject = ['CountriesService', '$http', '$scope'];
+
+  function MapController(CountriesService, $http, $scope){
+    var vm = this;
+    vm.searchInput;
+    vm.submitSearch = submitSearch
+
+    CountriesService.getCountries(function(artistsArr, group_a) {
+      vm.artistsArr = artistsArr;
+      vm.group_a = group_a;
+      setUpEvtListeners(vm.group_a);
+    });
+
+    function submitSearch(input){
+      var searchableWord = makeSearchableWord(input);
+      var idx = vm.artistsArr.map(function(el){
+        return el.name;
+      }).indexOf(searchableWord);
+      vm.selectedCountry = vm.artistsArr[idx].name;
+      vm.countryArtists = vm.artistsArr[idx].artists;
+    }
+
+    function makeSearchableWord(str){
+      var strArr = str.split(' ');
+      var newArr = strArr.map(function(el, idx){
+        if (el != 'of' && el != 'and'){
+          return el.charAt(0).toUpperCase() + el.slice(1);
+        } else {
+          return el;
+        }
+      })
+      return newArr.join(' ');
+    }
+
+    function setUpEvtListeners(arr){
+      arr.forEach(function(el, idx, arr){
+        addClickEvt(el);
+        addMouseover(el);
+        addMouseleave(el);
+      })
+    }
+
+    function addMouseover(el){
+      el.node.addEventListener('mouseover', function(evt){
+        $scope.$apply(function(){
+          el.node.setAttribute('fill', 'gold');
+          vm.country = el.data('country');
+        });
+      })
+    }
+
+    function addMouseleave(el){
+      el.node.addEventListener('mouseleave', function(evt){
+        $scope.$apply(function(){
+          el.node.setAttribute('fill', 'black');
+          vm.country = ''
+        })
+      })
+    }
+
+    function addClickEvt(el){
+      el.node.addEventListener('click', function(evt){
+        $scope.$apply(function() {
+          vm.countryArtists = el.data('artists');
+          vm.selectedCountry = el.data('country');
+        });
+      })
+    }
+
+  } // this closes MapController function
+
+})(); // this closes entire IIFE
+
+(function(){
+  'use strict';
+
+  angular.module('app')
+    .controller('SignUpController', SignUpController);
+
+  SignUpController.$inject = ['$http', '$state'];
+
+  function SignUpController($http, $state){
+    var vm = this;
+    vm.newArtist = {};
+    vm.postArtist = postArtist;
+    vm.blankForm = true;
+
+    function postArtist(evt){
+      var newArtist = vm.newArtist;
+      $http.post('api/artists', {newArtist}).then(function(response){
+        vm.blankForm = false;
+      })
+    } // this ends postArtist function
+  } // this ends SignUpController function
 
 })();
 
@@ -1151,196 +1378,4 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
     return service;
   } // this closes TokenService function
-})();
-
-(function(){
-  'use strict';
-
-  angular.module('app')
-    .controller('ArtistsController', ArtistsController);
-
-  ArtistsController.$inject = ['ArtistsService', '$http'];
-
-  function ArtistsController(ArtistsService, $http){
-    var vm = this;
-    vm.artistsAlerts = [];
-    vm.approveArtist = approveArtist;
-    vm.rejectArtist = rejectArtist;
-    vm.popAlert = popAlert;
-    vm.pendingArtists = [];
-    vm.approvedArtists = [];
-    vm.rejectedArtists = [];
-
-    function popAlert(){
-      vm.artistsAlerts.pop();
-    }
-
-    ArtistsService.getArtists()
-      .then(function(artists){
-        artists.forEach(function(el){
-          if (el.approved == 0){
-            vm.pendingArtists.push(el);
-          }
-          if (el.approved == 1){
-            vm.approvedArtists.push(el);
-          }
-          if (el.approved == 2){
-            vm.rejectedArtists.push(el);
-          }
-        })
-        vm.artists = artists;
-        // console.log(artists);
-      });
-
-    function approveArtist(artist){
-      console.log('click approveArtist');
-      vm.artistsAlerts.push(1);
-      $http.put(`api/artists?approve=true&id=${artist._id}`)
-        .then(function(response){
-          console.log(response);
-        });
-      var index = vm.pendingArtists.indexOf(artist);
-      vm.pendingArtists.splice(index, 1);
-      vm.approvedArtists.push(artist);
-    }
-
-    function rejectArtist(artist){
-      console.log('click rejectArtist');
-      // $http.put(`api/artists/reject/${artist._id}`)
-      $http.put(`api/artists/reject?id=${artist._id}`)
-        .then(function(response){
-          console.log(response);
-        });
-      var index = vm.pendingArtists.indexOf(artist);
-      vm.pendingArtists.splice(index, 1);
-      vm.rejected
-    } // this closes rejectArtist function
-
-  }
-
-})();
-
-(function(){
-  'use strict';
-
-  angular.module('app')
-    .controller('LogInController', LogInController);
-
-  LogInController.$inject = ['$http', 'LogInService', '$state'];
-
-  function LogInController($http, LogInService, $state){
-    var vm = this;
-    vm.login = logIn;
-
-    function logIn(username, password){
-      LogInService.login(vm.username, vm.password)
-        .then(function(user){
-          console.log('controller > then ', user)
-          $state.go('artists');
-        })
-        .catch(function(err){
-          console.log("controller > catch", err)
-          vm.username = '';
-          vm.password = '';
-          console.log('login error');
-        })
-    } // closes logIn function
-
-    // function login(username, password){
-    //   $http.post('/login', {username, password})
-    //     .then(function(response){
-    //       console.log(response.data.token);
-    //       TokenService.storeToken(response.data.token);
-    //       vm.user = TokenService.decodeToken(response.data.token);
-    //       console.log(vm.user);
-    //     }, function(err){
-    //       console.log(err);
-    //     });
-    // }
-
-  } // this closes the LogInController function
-
-})();
-
-(function(){
-  'use strict';
-
-  angular.module('app')
-    .controller('MapController', MapController);
-
-  MapController.$inject = ['CountriesService', '$http', '$scope'];
-
-  function MapController(CountriesService, $http, $scope){
-    var vm = this;
-    vm.title = 'hey there';
-
-    CountriesService.getCountries(function(artistsArr, group_a) {
-      vm.artistsArr = artistsArr;
-      vm.group_a = group_a;
-      setUpEvtListeners(vm.group_a);
-    });
-
-    function setUpEvtListeners(arr){
-      arr.forEach(function(el, idx, arr){
-        addClickEvt(el);
-        addMouseover(el);
-        addMouseleave(el);
-      })
-    }
-
-    function addMouseover(el){
-      el.node.addEventListener('mouseover', function(evt){
-        this.setAttribute('fill', 'gold');
-        vm.country = el.data('country');
-        $scope.$apply();
-      })
-    }
-
-
-
-    // change detection, when any of the props change, will re-render, views update
-    // if i don't trigger change detection cycle, will do it manually
-    //
-
-    function addMouseleave(el){
-      el.node.addEventListener('mouseleave', function(evt){
-        this.setAttribute('fill', 'black');
-        vm.country = ''
-        $scope.$apply();
-      })
-    }
-
-    function addClickEvt(el){
-      el.node.addEventListener('click', function(evt){
-        console.log(el.data('artists'));
-        vm.countryArtist = el.data('artists');
-      })
-    }
-
-  } // this closes MapController function
-
-})(); // this closes entire IIFE
-
-(function(){
-  'use strict';
-
-  angular.module('app')
-    .controller('SignUpController', SignUpController);
-
-  SignUpController.$inject = ['$http', '$state'];
-
-  function SignUpController($http, $state){
-    var vm = this;
-    vm.newArtist = {};
-    vm.postArtist = postArtist;
-    vm.blankForm = true;
-
-    function postArtist(evt){
-      var newArtist = vm.newArtist;
-      $http.post('api/artists', {newArtist}).then(function(response){
-        vm.blankForm = false;
-      })
-    } // this ends postArtist function
-  } // this ends SignUpController function
-
 })();
