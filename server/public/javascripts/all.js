@@ -6,26 +6,40 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   'use strict';
 
   angular.module('app', ['ui.router'])
-    .config(Routes);
+    .config(Routes)
+    .run(run);
 
   Routes.$inject = ['$stateProvider', '$urlRouterProvider'];
+  run.$inject = ['$rootScope', 'LogInService', '$state'];
+
+  function run ($rootScope, LogInService, $state){
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams){
+      if (toState.authReq && !LogInService.getUser()){
+        event.preventDefault();
+        $state.go('login');
+      }
+    })
+  }
 
   function Routes($stateProvider, $urlRouterProvider){
     $stateProvider
       .state('map', {
         url: '/',
         controller: 'MapController as vm',
-        templateUrl: 'templates/map.html'
+        templateUrl: 'templates/map.html',
+        authReq: false
       })
       .state('signup', {
         url: '/signup',
         controller: 'SignUpController as vm',
-        templateUrl: 'templates/signup.html'
+        templateUrl: 'templates/signup.html',
+        authReq: false
       })
       .state('login', {
         url: '/login',
         controller: 'LogInController as vm',
-        templateUrl: 'templates/login.html'
+        templateUrl: 'templates/login.html',
+        authReq: false
       })
       .state('artists', {
         url: '/artists',
@@ -36,7 +50,8 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
           }
         },
         controller: 'ArtistsController as vm',
-        templateUrl: 'templates/artists.html'
+        templateUrl: 'templates/artists.html',
+        authReq: true
       })
     $urlRouterProvider.otherwise('/');
   }
@@ -162,13 +177,35 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
   function MapController(CountriesService, $http, $scope){
     var vm = this;
-    vm.title = 'hey there';
+    vm.searchInput;
+    vm.submitSearch = submitSearch
 
     CountriesService.getCountries(function(artistsArr, group_a) {
       vm.artistsArr = artistsArr;
       vm.group_a = group_a;
       setUpEvtListeners(vm.group_a);
     });
+
+    function submitSearch(input){
+      var searchableWord = makeSearchableWord(input);
+      var idx = vm.artistsArr.map(function(el){
+        return el.name;
+      }).indexOf(searchableWord);
+      vm.selectedCountry = vm.artistsArr[idx].name;
+      vm.countryArtists = vm.artistsArr[idx].artists;
+    }
+
+    function makeSearchableWord(str){
+      var strArr = str.split(' ');
+      var newArr = strArr.map(function(el, idx){
+        if (el != 'of' && el != 'and'){
+          return el.charAt(0).toUpperCase() + el.slice(1);
+        } else {
+          return el;
+        }
+      })
+      return newArr.join(' ');
+    }
 
     function setUpEvtListeners(arr){
       arr.forEach(function(el, idx, arr){
@@ -180,30 +217,28 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
     function addMouseover(el){
       el.node.addEventListener('mouseover', function(evt){
-        this.setAttribute('fill', 'gold');
-        vm.country = el.data('country');
-        $scope.$apply();
+        $scope.$apply(function(){
+          el.node.setAttribute('fill', 'gold');
+          vm.country = el.data('country');
+        });
       })
     }
 
-
-
-    // change detection, when any of the props change, will re-render, views update
-    // if i don't trigger change detection cycle, will do it manually
-    //
-
     function addMouseleave(el){
       el.node.addEventListener('mouseleave', function(evt){
-        this.setAttribute('fill', 'black');
-        vm.country = ''
-        $scope.$apply();
+        $scope.$apply(function(){
+          el.node.setAttribute('fill', 'black');
+          vm.country = ''
+        })
       })
     }
 
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
-        console.log(el.data('artists'));
-        vm.countryArtist = el.data('artists');
+        $scope.$apply(function() {
+          vm.countryArtists = el.data('artists');
+          vm.selectedCountry = el.data('country');
+        });
       })
     }
 
