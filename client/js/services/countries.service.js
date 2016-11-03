@@ -7,17 +7,15 @@
   CountriesService.$inject = ['MapService', '$http'];
 
   function CountriesService(MapService, $http){
-    var group_a = MapService.group_a;
+    MapService.renderMap();
     var artistsArr = [];
 
     function getCountries(cb){
       $http.get('/api/countries').then(function(response){
         response.data.forEach(function(country, countryIdx){
-          if (country.name == 'United States'){
-            console.log(country);
-          }
           artistsArr.push(country);
         });
+        var group_a = MapService.getGroup_a();
         group_a.forEach(function(el, idx, arr){
           el.data('country', artistsArr[idx].name);
           el.data('artists', artistsArr[idx].artists);
