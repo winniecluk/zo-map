@@ -44,6 +44,9 @@
         .then(function(response){
           console.log(response);
         });
+      var index = vm.pendingArtists.indexOf(artist);
+      vm.pendingArtists.splice(index, 1);
+      vm.approvedArtists.push(artist);
     }
 
     function rejectArtist(artist){

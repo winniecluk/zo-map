@@ -1199,6 +1199,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         .then(function(response){
           console.log(response);
         });
+      var index = vm.pendingArtists.indexOf(artist);
+      vm.pendingArtists.splice(index, 1);
+      vm.approvedArtists.push(artist);
     }
 
     function rejectArtist(artist){
