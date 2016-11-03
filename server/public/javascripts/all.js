@@ -240,9 +240,11 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
-        console.log(el.data('artists'));
-        vm.countryArtists = el.data('artists');
-        vm.selectedCountry = el.data('country');
+        $scope.$apply(function() {
+          console.log(el.data('artists'));
+          vm.countryArtists = el.data('artists');
+          vm.selectedCountry = el.data('country');
+        });
       })
     }
 
