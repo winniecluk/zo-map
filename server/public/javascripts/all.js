@@ -8,9 +8,11 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app', ['ui.router'])
     .config(Routes)
     .run(run);
+    // .run(getMap);
 
   Routes.$inject = ['$stateProvider', '$urlRouterProvider'];
   run.$inject = ['$rootScope', 'LogInService', '$state'];
+  // getMap.$inject = ['$rootScope', 'MapController']
 
   function run ($rootScope, LogInService, $state){
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams){
@@ -21,13 +23,28 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     })
   }
 
+  // function getMap($rootScope, MapController){
+  //   $rootScope.$on('$stateChangeStart', function(event, toState, toParams){
+  //     if (toState.toMap){
+  //       event.preventDefault();
+  //       MapController.getCountries();
+  //     }
+  //   })
+  // }
+
   function Routes($stateProvider, $urlRouterProvider){
     $stateProvider
-      .state('map', {
+      .state('aboutus', {
         url: '/',
+        templateUrl: 'templates/aboutus.html',
+        authReq: false
+      })
+      .state('map', {
+        url: '/map',
         controller: 'MapController as vm',
         templateUrl: 'templates/map.html',
-        authReq: false
+        authReq: false,
+        toMap: true
       })
       .state('signup', {
         url: '/signup',
@@ -180,11 +197,16 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.searchInput;
     vm.submitSearch = submitSearch
 
-    CountriesService.getCountries(function(artistsArr, group_a) {
-      vm.artistsArr = artistsArr;
-      vm.group_a = group_a;
-      setUpEvtListeners(vm.group_a);
-    });
+
+    function getCountries(){
+      CountriesService.getCountries(function(artistsArr, group_a) {
+        vm.artistsArr = artistsArr;
+        vm.group_a = group_a;
+        setUpEvtListeners(vm.group_a);
+      });
+    }
+
+    getCountries();
 
     function submitSearch(input){
       var searchableWord = makeSearchableWord(input);

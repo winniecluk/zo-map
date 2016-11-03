@@ -11,11 +11,16 @@
     vm.searchInput;
     vm.submitSearch = submitSearch
 
-    CountriesService.getCountries(function(artistsArr, group_a) {
-      vm.artistsArr = artistsArr;
-      vm.group_a = group_a;
-      setUpEvtListeners(vm.group_a);
-    });
+
+    function getCountries(){
+      CountriesService.getCountries(function(artistsArr, group_a) {
+        vm.artistsArr = artistsArr;
+        vm.group_a = group_a;
+        setUpEvtListeners(vm.group_a);
+      });
+    }
+
+    getCountries();
 
     function submitSearch(input){
       var searchableWord = makeSearchableWord(input);

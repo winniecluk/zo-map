@@ -4,9 +4,11 @@
   angular.module('app', ['ui.router'])
     .config(Routes)
     .run(run);
+    // .run(getMap);
 
   Routes.$inject = ['$stateProvider', '$urlRouterProvider'];
   run.$inject = ['$rootScope', 'LogInService', '$state'];
+  // getMap.$inject = ['$rootScope', 'MapController']
 
   function run ($rootScope, LogInService, $state){
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams){
@@ -17,13 +19,28 @@
     })
   }
 
+  // function getMap($rootScope, MapController){
+  //   $rootScope.$on('$stateChangeStart', function(event, toState, toParams){
+  //     if (toState.toMap){
+  //       event.preventDefault();
+  //       MapController.getCountries();
+  //     }
+  //   })
+  // }
+
   function Routes($stateProvider, $urlRouterProvider){
     $stateProvider
-      .state('map', {
+      .state('aboutus', {
         url: '/',
+        templateUrl: 'templates/aboutus.html',
+        authReq: false
+      })
+      .state('map', {
+        url: '/map',
         controller: 'MapController as vm',
         templateUrl: 'templates/map.html',
-        authReq: false
+        authReq: false,
+        toMap: true
       })
       .state('signup', {
         url: '/signup',
