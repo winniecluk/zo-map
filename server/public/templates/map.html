@@ -1,9 +1,9 @@
-
-Hey this is a map page
+<nav>
+  <a ui-sref="map">Artists' Map</a><a ui-sref="signup">Sign Up</a>
+</nav>
 <div id="map">
 </div>
 <div style="top-margin: -50px" id="identifier">{{vm.country}}</div>
 <div id="console">
-  <div ng-repeat="artist in vm.countryArtist">{{artist.name}} - {{artist.phone}}</div>
-
+  <div ng-repeat="artist in vm.countryArtist" ng-if="artist.approved">{{artist.f_name}} - {{artist.phone}}</div>
 </div>

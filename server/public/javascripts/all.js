@@ -100,8 +100,10 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function getCountries(cb){
       $http.get('/api/countries').then(function(response){
         response.data.forEach(function(country, countryIdx){
+          if (country.name == 'United States'){
+            console.log(country);
+          }
           artistsArr.push(country);
-          console.log(country.name);
         });
         group_a.forEach(function(el, idx, arr){
           el.data('country', artistsArr[idx].name);
@@ -1161,25 +1163,58 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
   function ArtistsController(ArtistsService, $http){
     var vm = this;
+    vm.artistsAlerts = [];
     vm.approveArtist = approveArtist;
     vm.rejectArtist = rejectArtist;
+    vm.popAlert = popAlert;
+    vm.pendingArtists = [];
+    vm.approvedArtists = [];
+    vm.rejectedArtists = [];
+
+    function popAlert(){
+      vm.artistsAlerts.pop();
+    }
 
     ArtistsService.getArtists()
       .then(function(artists){
+        artists.forEach(function(el){
+          if (el.approved == 0){
+            vm.pendingArtists.push(el);
+          }
+          if (el.approved == 1){
+            vm.approvedArtists.push(el);
+          }
+          if (el.approved == 2){
+            vm.rejectedArtists.push(el);
+          }
+        })
         vm.artists = artists;
+        // console.log(artists);
       });
 
     function approveArtist(artist){
       console.log('click approveArtist');
+      vm.artistsAlerts.push(1);
       $http.put(`api/artists?approve=true&id=${artist._id}`)
         .then(function(response){
           console.log(response);
         });
+      var index = vm.pendingArtists.indexOf(artist);
+      vm.pendingArtists.splice(index, 1);
+      vm.approvedArtists.push(artist);
     }
 
     function rejectArtist(artist){
-
-    }
+      console.log('click rejectArtist');
+      // $http.put(`api/artists/reject/${artist._id}`)
+      $http.put(`api/artists/reject?id=${artist._id}`)
+        .then(function(response){
+          console.log(response);
+        });
+      var index = vm.pendingArtists.indexOf(artist);
+      vm.pendingArtists.splice(index, 1);
+      vm.rejected
+    } // this closes rejectArtist function
 
   }
 
@@ -1247,9 +1282,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
     function setUpEvtListeners(arr){
       arr.forEach(function(el, idx, arr){
+        addClickEvt(el);
         addMouseover(el);
         addMouseleave(el);
-        addClickEvt(el);
       })
     }
 
@@ -1277,6 +1312,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
+        console.log(el.data('artists'));
         vm.countryArtist = el.data('artists');
       })
     }
