@@ -30,8 +30,14 @@ function makeToken(req, res, next){
   // this closes the if/else
 } // this closes the makeToken function
 
-function checkToken(){
-  // console.log(req.get('Authorization'));
+function checkToken(req, res, next){
+  var token = req.get('Authorization').split(' ')[1];
+  console.log(token);
+  jwt.verify(token, jwtSecret, function(err, decoded){
+    // if (err) return next(err);
+    // req.decoded = decoded;
+    next();
+  })
 }
 
 module.exports = {

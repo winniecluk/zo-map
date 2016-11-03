@@ -36,8 +36,8 @@ artistSchema.methods.reject = function(cb) {
   Country.findOne({name: self.country}, function(err, country){
     country.artists.pull(self);
     country.save();
+    cb(err, self, country);
   })
-  cb(err, self, country);
 }
 
 module.exports = mongoose.model('Artist', artistSchema);

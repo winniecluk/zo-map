@@ -51,11 +51,15 @@
 
     function rejectArtist(artist){
       console.log('click rejectArtist');
-      $http.put(`api/artists/reject/${artist._id}`)
+      // $http.put(`api/artists/reject/${artist._id}`)
+      $http.put(`api/artists/reject?id=${artist._id}`)
         .then(function(response){
           console.log(response);
         });
-    }
+      var index = vm.pendingArtists.indexOf(artist);
+      vm.pendingArtists.splice(index, 1);
+      vm.rejected
+    } // this closes rejectArtist function
 
   }
 

@@ -15,11 +15,9 @@ router.get('/countries', function(req, res, next){
     });
 })
 
-router.get('/artists', function(req, res, next){
-  console.log(req.get('Authorization').split(' ')[1]);
+router.get('/artists', token.checkToken, function(req, res, next){
   Artist.find({}, function(err, artists){
     res.status(200).json(artists);
-    // console.log(artists);
   })
 })
 
@@ -33,26 +31,26 @@ router.put('/artists', function(req, res, next){
   }) // this closes findOne
 }) // this closes route
 
-// router.put('/artists/reject/:id', function(req, res, next){
-//   console.log(req.params);
-//   Artist.findOne({_id: req.params.id}, function(err, artist){
-//     console.log(artist);
-//     if (err) return next(err);
-//     artist.reject(function(err, self, country){
-//     //   console.log(artist);
-//       if(err) return next(err);
-//       res.json({artist});
-//     })
-//   });
-// })
-
-router.put('/artists/reject/:id', function(req, res, next){
-  console.log(req.params);
-  Artist.findByIdAndUpdate(req.params.id, { $set: {approved: 3} }, function(err, artist){
+router.put('/artists/reject', function(req, res, next){
+  console.log(req.query);
+  Artist.findOne({_id: req.query.id}, function(err, artist){
     console.log(artist);
-    res.json(artist);
+    if (err) return next(err);
+    artist.reject(function(err, self, country){
+    //   console.log(artist);
+      if(err) return next(err);
+      res.json({artist});
+    })
   });
 })
+
+// router.put('/artists/reject/:id', function(req, res, next){
+//   console.log(req.params);
+//   Artist.findByIdAndUpdate(req.params.id, { $set: {approved: 3} }, function(err, artist){
+//     console.log(artist);
+//     res.json(artist);
+//   });
+// })
 
 router.post('/artists', function(req, res, next){
   Artist.create(req.body.newArtist, function(err, artist){
