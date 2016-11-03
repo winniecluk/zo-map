@@ -4,12 +4,14 @@
   angular.module('app')
     .controller('MapController', MapController);
 
-  MapController.$inject = ['CountriesService', '$http', '$scope'];
+  MapController.$inject = ['MapService', 'CountriesService', '$http', '$scope'];
 
-  function MapController(CountriesService, $http, $scope){
+  function MapController(MapService, CountriesService, $http, $scope){
     var vm = this;
     vm.searchInput;
     vm.submitSearch = submitSearch
+
+    MapService.renderMap();
 
     CountriesService.getCountries(function(artistsArr, group_a) {
       vm.artistsArr = artistsArr;
@@ -76,3 +78,5 @@
   } // this closes MapController function
 
 })(); // this closes entire IIFE
+
+
