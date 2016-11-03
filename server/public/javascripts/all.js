@@ -180,6 +180,12 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.searchInput;
     vm.submitSearch = submitSearch
 
+    CountriesService.getCountries(function(artistsArr, group_a) {
+      vm.artistsArr = artistsArr;
+      vm.group_a = group_a;
+      setUpEvtListeners(vm.group_a);
+    });
+
     function submitSearch(input){
       var searchableWord = makeSearchableWord(input);
       var idx = vm.artistsArr.map(function(el){
@@ -200,12 +206,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       })
       return newArr.join(' ');
     }
-
-    CountriesService.getCountries(function(artistsArr, group_a) {
-      vm.artistsArr = artistsArr;
-      vm.group_a = group_a;
-      setUpEvtListeners(vm.group_a);
-    });
 
     function setUpEvtListeners(arr){
       arr.forEach(function(el, idx, arr){

@@ -11,6 +11,12 @@
     vm.searchInput;
     vm.submitSearch = submitSearch
 
+    CountriesService.getCountries(function(artistsArr, group_a) {
+      vm.artistsArr = artistsArr;
+      vm.group_a = group_a;
+      setUpEvtListeners(vm.group_a);
+    });
+
     function submitSearch(input){
       var searchableWord = makeSearchableWord(input);
       var idx = vm.artistsArr.map(function(el){
@@ -31,12 +37,6 @@
       })
       return newArr.join(' ');
     }
-
-    CountriesService.getCountries(function(artistsArr, group_a) {
-      vm.artistsArr = artistsArr;
-      vm.group_a = group_a;
-      setUpEvtListeners(vm.group_a);
-    });
 
     function setUpEvtListeners(arr){
       arr.forEach(function(el, idx, arr){

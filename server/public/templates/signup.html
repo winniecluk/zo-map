@@ -1,11 +1,12 @@
 <div class="strong">
   Sign Up
 </div>
-<div>
-  Interested in working with ZO? Submit your information below!
-</div>
 
-<div ng-if="vm.blankForm">
+<div class="form" ng-if="vm.blankForm">
+
+  <div>
+    Interested in working with ZO? Submit your information below!
+  </div>
   <div class="form-row">
     <label>Name:</label>
     <input type="text" placeholder="First Name" ng-model="vm.newArtist.f_name">
@@ -50,6 +51,7 @@
   <div class="form-row">
     <button ng-click="vm.postArtist()">Submit</button>
   </div>
+
 </div> <!-- this closes the form -->
 
 <div ng-if="!vm.blankForm">Thanks!</div>

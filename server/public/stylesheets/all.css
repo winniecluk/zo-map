@@ -3,9 +3,10 @@
 }
 
 body {
-  background: url('../images/textured-peach-1.jpg');
+/*  background: url('../images/textured-peach-1.jpg');*/
+  background-color: #F2F2F2;
   background-size: contain;
-  font: 1em "Open Sans", sans-serif;
+  font: 18px "Open Sans", sans-serif;
   margin: 0;
 }
 
@@ -24,16 +25,19 @@ body {
   height: 60px;
 }
 
-#console {
+console {
+  display: block;
   height: 60vh;
-  width: 100vw;
+  width: 80vw;
+  margin: 0 auto;
 }
 
 .strong {
   text-align: center;
-  margin: 16px;
+  margin: 64px 0;
   font-weight: bolder;
   font-size: 2em;
+  text-decoration: underline;
 }
 
 nav {
@@ -77,11 +81,18 @@ input[type=text]:focus {
 
 /* for sign-up form */
 
+.form {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .form-row {
   padding: 2vh 0 0 0;
 /*  display: flex;
   justify-content: space-around;*/
 }
+
+
 
 label, textarea, button {
   margin: 0 0 0 4px;

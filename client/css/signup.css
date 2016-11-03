@@ -1,10 +1,17 @@
 /* for sign-up form */
 
+.form {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .form-row {
   padding: 2vh 0 0 0;
 /*  display: flex;
   justify-content: space-around;*/
 }
+
+
 
 label, textarea, button {
   margin: 0 0 0 4px;
