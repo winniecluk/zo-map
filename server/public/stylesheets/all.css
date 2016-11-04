@@ -27,18 +27,42 @@ body {
 
 console {
   display: block;
-  height: 60vh;
-  width: 80vw;
-  margin: 0 auto;
+  height: 700px;
+  width: 1050px;
+  margin: 60px auto;
+  padding: 20px;
 }
 
-.strong {
+search {
+  display: block;
+  margin: 20px;
+  border: 1px solid black;
+  padding: 20px;
+}
+
+.heading {
+  font-size: 34px;
+  text-decoration: underline;
+  padding: 0 0 20px;
+}
+
+info {
+  display: block;
+  padding: 40px;
+}
+
+.title {
   text-align: center;
   margin: 64px 0;
   font-weight: bolder;
   font-size: 2em;
   text-decoration: underline;
 }
+
+.lastdiv {
+  padding-bottom: 40px;
+}
+
 
 nav {
   text-align: right;
@@ -64,19 +88,24 @@ nav > a:hover {
   color: white;
 }
 
-search {
-  display: block;
-  margin: 20px;
-}
-
 input[type=text] {
-  height: 30px;
+  height: 40px;
   margin-top: 30px;
   margin-left: 30px;
+  margin-right: 10px;
+  width: 30vw;
+  font-size: 16px;
 }
 
 input[type=text]:focus {
-  border: 3px solid blue;
+  border: 1px solid blue;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
 }
 
 /* for sign-up form */

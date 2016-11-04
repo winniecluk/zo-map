@@ -30,7 +30,7 @@
 
     function makeSearchableWord(str){
       var strArr = str.split(' ');
-      var newArr = strArr.map(function(el, idx){
+      var newArr = strArr.map(function(el, wordIdx){
         if (el != 'of' && el != 'and'){
           return el.charAt(0).toUpperCase() + el.slice(1);
         } else {

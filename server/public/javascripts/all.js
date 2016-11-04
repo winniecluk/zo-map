@@ -23,8 +23,13 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
   function Routes($stateProvider, $urlRouterProvider){
     $stateProvider
-      .state('map', {
+      .state('aboutus', {
         url: '/',
+        templateUrl: 'templates/aboutus.html',
+        authReq: false
+      })
+      .state('map', {
+        url: '/map',
         controller: 'MapController as vm',
         templateUrl: 'templates/map.html',
         authReq: false
@@ -199,7 +204,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
     function makeSearchableWord(str){
       var strArr = str.split(' ');
-      var newArr = strArr.map(function(el, idx){
+      var newArr = strArr.map(function(el, wordIdx){
         if (el != 'of' && el != 'and'){
           return el.charAt(0).toUpperCase() + el.slice(1);
         } else {
