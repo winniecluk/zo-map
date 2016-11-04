@@ -95,9 +95,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('ArtistsController', ArtistsController);
 
-  ArtistsController.$inject = ['ArtistsService', '$http'];
+  ArtistsController.$inject = ['ArtistsService', '$http', 'TokenService', '$state', '$scope'];
 
-  function ArtistsController(ArtistsService, $http){
+  function ArtistsController(ArtistsService, $http, TokenService, $state, $scope){
     var vm = this;
     vm.artistsAlerts = [];
     vm.approveArtist = approveArtist;
@@ -106,6 +106,13 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.pendingArtists = [];
     vm.approvedArtists = [];
     vm.rejectedArtists = [];
+    vm.logout = logout;
+
+    function logout (){
+      TokenService.removeToken();
+      $state.go('aboutus');
+    }
+
 
     function popAlert(){
       vm.artistsAlerts.pop();
@@ -129,7 +136,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       });
 
     function approveArtist(artist){
-      console.log('click approveArtist');
       vm.artistsAlerts.push(1);
       $http.put(`api/artists?approve=true&id=${artist._id}`)
         .then(function(response){
@@ -149,7 +155,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         });
       var index = vm.pendingArtists.indexOf(artist);
       vm.pendingArtists.splice(index, 1);
-      vm.rejected
+      vm.rejectedArtists.push(artist);
     } // this closes rejectArtist function
 
   }
@@ -171,28 +177,14 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function logIn(username, password){
       LogInService.login(vm.username, vm.password)
         .then(function(user){
-          console.log('controller > then ', user)
           $state.go('artists');
         })
         .catch(function(err){
-          console.log("controller > catch", err)
           vm.username = '';
           vm.password = '';
-          console.log('login error');
+          vm.error = err.data.error;
         })
     } // closes logIn function
-
-    // function login(username, password){
-    //   $http.post('/login', {username, password})
-    //     .then(function(response){
-    //       console.log(response.data.token);
-    //       TokenService.storeToken(response.data.token);
-    //       vm.user = TokenService.decodeToken(response.data.token);
-    //       console.log(vm.user);
-    //     }, function(err){
-    //       console.log(err);
-    //     });
-    // }
 
   } // this closes the LogInController function
 
@@ -232,7 +224,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       var strArr = str.split(' ');
       var newArr = strArr.map(function(el, wordIdx){
         if (el != 'of' && el != 'and'){
-          return el.charAt(0).toUpperCase() + el.slice(1);
+          return el.charAt(0).toUpperCase() + el.slice(1).toLowerCase();
         } else {
           return el;
         }
@@ -427,15 +419,12 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function login(username, password){
       return $http.post('/login', {username, password})
         .then(function(response){
-          // console.log('service > then', response)
           TokenService.storeToken(response.data.token);
           var user = TokenService.decodeToken(response.data.token);
           return user;
         })
         .catch(function (err) {
-          // console.log('service > catch', err)
-          return Promise.reject('err')
-          // return "hello!"
+          return Promise.reject(err);
         })
     }
 

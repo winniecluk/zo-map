@@ -12,13 +12,44 @@ ul {
   margin: 0 auto;
 }
 
+.equalspace {
+  display: flex;
+  justify-content: space-around;
+}
+
+.left {
+  margin-left: 0;
+}
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login {
+  padding: 16px;
+  border: 1px solid black;
+}
+
+.login > div:nth-child(2) {
+  padding-bottom: 20px;
+  height: 90px;
+}
+
+.red {
+  color: red;
+}
+
 * {
   border: 1px solid red;
 }
 
 body {
 /*  background: url('../images/textured-peach-1.jpg');*/
-  background-color: #F2F2F2;
+  background-color: #FFF6E0;
   background-size: contain;
   font: 18px "Open Sans", sans-serif;
   margin: 0;
@@ -67,7 +98,7 @@ info {
 
 .title {
   text-align: center;
-  margin: 64px 0;
+  margin: 64px 0 42px;
   font-weight: bolder;
   font-size: 2em;
   text-decoration: underline;
@@ -107,7 +138,7 @@ input[type=text] {
   margin-top: 30px;
   margin-left: 30px;
   margin-right: 10px;
-  width: 30vw;
+  width: 280px;
   font-size: 16px;
 }
 
@@ -125,20 +156,34 @@ button {
 /* for sign-up form */
 
 .form {
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
 }
 
-.form-row {
-  padding: 2vh 0 0 0;
-/*  display: flex;
-  justify-content: space-around;*/
+.center {
+  text-align: center;
+}
+
+label {
+  font-size: 22px;
+}
+
+
+select {
+  width: 224px;
+}
+
+textarea {
+  width: 60vw;
+  height: 150px;
+}
+
+td {
+  padding: 8px;
+  line-height: 60px;
 }
 
 
 
-label, textarea, button {
-  margin: 0 0 0 4px;
-}
 
 

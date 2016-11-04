@@ -1,0 +1,21 @@
+.page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login {
+  padding: 16px;
+  border: 1px solid black;
+}
+
+.login > div:nth-child(2) {
+  padding-bottom: 20px;
+  height: 90px;
+}
+
+.red {
+  color: red;
+}

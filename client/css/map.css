@@ -4,7 +4,7 @@
 
 body {
 /*  background: url('../images/textured-peach-1.jpg');*/
-  background-color: #F2F2F2;
+  background-color: #FFF6E0;
   background-size: contain;
   font: 18px "Open Sans", sans-serif;
   margin: 0;
@@ -53,7 +53,7 @@ info {
 
 .title {
   text-align: center;
-  margin: 64px 0;
+  margin: 64px 0 42px;
   font-weight: bolder;
   font-size: 2em;
   text-decoration: underline;
@@ -93,7 +93,7 @@ input[type=text] {
   margin-top: 30px;
   margin-left: 30px;
   margin-right: 10px;
-  width: 30vw;
+  width: 280px;
   font-size: 16px;
 }
 

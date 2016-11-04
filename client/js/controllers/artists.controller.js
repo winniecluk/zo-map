@@ -4,9 +4,9 @@
   angular.module('app')
     .controller('ArtistsController', ArtistsController);
 
-  ArtistsController.$inject = ['ArtistsService', '$http'];
+  ArtistsController.$inject = ['ArtistsService', '$http', 'TokenService', '$state', '$scope'];
 
-  function ArtistsController(ArtistsService, $http){
+  function ArtistsController(ArtistsService, $http, TokenService, $state, $scope){
     var vm = this;
     vm.artistsAlerts = [];
     vm.approveArtist = approveArtist;
@@ -15,6 +15,13 @@
     vm.pendingArtists = [];
     vm.approvedArtists = [];
     vm.rejectedArtists = [];
+    vm.logout = logout;
+
+    function logout (){
+      TokenService.removeToken();
+      $state.go('aboutus');
+    }
+
 
     function popAlert(){
       vm.artistsAlerts.pop();
@@ -38,7 +45,6 @@
       });
 
     function approveArtist(artist){
-      console.log('click approveArtist');
       vm.artistsAlerts.push(1);
       $http.put(`api/artists?approve=true&id=${artist._id}`)
         .then(function(response){
@@ -58,7 +64,7 @@
         });
       var index = vm.pendingArtists.indexOf(artist);
       vm.pendingArtists.splice(index, 1);
-      vm.rejected
+      vm.rejectedArtists.push(artist);
     } // this closes rejectArtist function
 
   }

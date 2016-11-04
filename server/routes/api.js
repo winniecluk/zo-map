@@ -44,14 +44,6 @@ router.put('/artists/reject', function(req, res, next){
   });
 })
 
-// router.put('/artists/reject/:id', function(req, res, next){
-//   console.log(req.params);
-//   Artist.findByIdAndUpdate(req.params.id, { $set: {approved: 3} }, function(err, artist){
-//     console.log(artist);
-//     res.json(artist);
-//   });
-// })
-
 router.post('/artists', function(req, res, next){
   Artist.create(req.body.newArtist, function(err, artist){
       res.status(201).send(artist);

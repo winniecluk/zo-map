@@ -1,25 +1,35 @@
+<button class="left" ng-click="vm.logout()">Log Out</button>
+
 <div ng-repeat="alert in vm.artistsAlerts track by $index">Artist has been approved!<span ng-click="vm.popAlert()">X</span></div>
 
 <div><strong>Pending Artists</strong></div>
 <div ng-repeat="artist in vm.pendingArtists track by $index">
   <div>
-  {{artist.f_name}}
-  {{artist.l_name}}
+
   </div>
-  {{artist.phone}}
-  {{artist.email}}
-  {{artist.website}}
-  {{artist.city}}
-  {{artist.country}}
-  {{artist.medium}}
+  <div class="equalspace">
+  <span>Name: {{artist.f_name}}
+  {{artist.l_name}}</span>
+  <span>Phone: {{artist.phone}}</span>
+  <span>Email: {{artist.email}}</span>
+  <span>Website: {{artist.website}}</span>
+  <span>City: {{artist.city}}</span>
+  <span>Country: {{artist.country}}</span>
+  <span>Medium: {{artist.medium}}</span>
+  </div>
+  <div class="equalspace">
+  Biography:
   {{artist.biography}}
+  </div>
+  <div>
   <button ng-click="vm.approveArtist(artist)">Approve Artist</button>
   <button ng-click="vm.rejectArtist(artist)">Reject Artist</button>
+  </div>
 </div>
 
 <div><strong>Approved Artists</strong></div>
-<div ng-repeat="artist in vm.approvedArtists track by $index" ng-if="artist.approved == 1">{{artist.f_name}}</div>
+<div ng-repeat="artist in vm.approvedArtists track by $index" ng-if="artist.approved == 1">{{artist.f_name}} {{artist.l_name}}</div>
 
 
 <div><strong>Rejected Artists</strong></div>
-<div ng-repeat="artist in vm.rejectedArtists track by $index" ng-if="artist.approved == 2">{{artist.f_name}}</div>
+<div ng-repeat="artist in vm.rejectedArtists track by $index" ng-if="artist.approved == 2">{{artist.f_name}} {{artist.l_name}}</div>

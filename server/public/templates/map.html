@@ -17,7 +17,7 @@
       <div ng-repeat="artist in vm.countryArtists track by $index" ng-if="artist.approved">
         <div><strong>{{artist.medium | uppercase}}</strong></div>
         <div>{{artist.f_name}} {{artist.l_name}}</div>
-        <div>{{artist.city}} {{artist.country}}</div>
+        <div>{{artist.city}}</div>
         <div>{{artist.website}}</div>
         <div class="lastdiv">{{artist.biography}}</div>
       </div>
