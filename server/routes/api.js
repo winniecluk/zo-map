@@ -32,12 +32,9 @@ router.put('/artists', function(req, res, next){
 }) // this closes route
 
 router.put('/artists/reject', function(req, res, next){
-  console.log(req.query);
   Artist.findOne({_id: req.query.id}, function(err, artist){
-    console.log(artist);
     if (err) return next(err);
     artist.reject(function(err, self, country){
-    //   console.log(artist);
       if(err) return next(err);
       res.json({artist});
     })

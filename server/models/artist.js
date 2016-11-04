@@ -10,7 +10,6 @@ var artistSchema = new Schema({
   website: String,
   city: String,
   country: String,
-  // have to pull country model and assign it that country id
   medium: String,
   biography: String,
   approved: {type: Number, default: 0}
