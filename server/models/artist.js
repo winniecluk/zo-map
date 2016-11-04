@@ -20,9 +20,9 @@ artistSchema.methods.approve = function(cb) {
   self.approved = 1;
   self.save();
   Country.findOne({name: self.country}, function(err, country){
-    country.artists.push(self);
-    country.save();
-  });
+      country.artists.push(self);
+      country.save();
+
     cb(err, self, country);
   }) // closes Country.findOne
 } // closes instance method
