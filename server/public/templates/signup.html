@@ -255,10 +255,8 @@
         <textarea ng-model="vm.newArtist.biography"></textarea>
       </td>
     </tr>
+  </table> <!-- this closes the form -->
+  <button ng-click="vm.postArtist()">Submit</button>
+</div>
 
-
-
-</table> <!-- this closes the form -->
-          <button ng-click="vm.postArtist()">Submit</button>
-
-<div ng-if="!vm.blankForm">Thanks!</div>
+<div class="center" ng-if="!vm.blankForm">Thanks for signing up! We'll be in touch with you soon.</div>

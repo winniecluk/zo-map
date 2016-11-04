@@ -12,6 +12,28 @@ ul {
   margin: 0 auto;
 }
 
+.page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login {
+  padding: 16px;
+  border: 1px solid black;
+}
+
+.login > div:nth-child(2) {
+  padding-bottom: 20px;
+  height: 90px;
+}
+
+.red {
+  color: red;
+}
+
 * {
   border: 1px solid red;
 }
@@ -67,7 +89,7 @@ info {
 
 .title {
   text-align: center;
-  margin: 64px 0;
+  margin: 64px 0 42px;
   font-weight: bolder;
   font-size: 2em;
   text-decoration: underline;
@@ -129,9 +151,9 @@ button {
   margin: 0 auto;
 }
 
-/*.form-row {
-  padding: 2vh 0 0 0;
-}*/
+.center {
+  text-align: center;
+}
 
 label {
   font-size: 22px;

@@ -5,9 +5,9 @@
   margin: 0 auto;
 }
 
-/*.form-row {
-  padding: 2vh 0 0 0;
-}*/
+.center {
+  text-align: center;
+}
 
 label {
   font-size: 22px;
