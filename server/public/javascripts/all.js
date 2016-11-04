@@ -23,8 +23,13 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
   function Routes($stateProvider, $urlRouterProvider){
     $stateProvider
-      .state('map', {
+      .state('aboutus', {
         url: '/',
+        templateUrl: 'templates/aboutus.html',
+        authReq: false
+      })
+      .state('map', {
+        url: '/map',
         controller: 'MapController as vm',
         templateUrl: 'templates/map.html',
         authReq: false
