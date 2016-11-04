@@ -12,6 +12,15 @@ ul {
   margin: 0 auto;
 }
 
+.equalspace {
+  display: flex;
+  justify-content: space-around;
+}
+
+.left {
+  margin-left: 0;
+}
+
 .page {
   width: 100vw;
   height: 100vh;
@@ -40,7 +49,7 @@ ul {
 
 body {
 /*  background: url('../images/textured-peach-1.jpg');*/
-  background-color: #F2F2F2;
+  background-color: #FFF6E0;
   background-size: contain;
   font: 18px "Open Sans", sans-serif;
   margin: 0;

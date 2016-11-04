@@ -95,9 +95,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('ArtistsController', ArtistsController);
 
-  ArtistsController.$inject = ['ArtistsService', '$http', 'TokenService', '$state'];
+  ArtistsController.$inject = ['ArtistsService', '$http', 'TokenService', '$state', '$scope'];
 
-  function ArtistsController(ArtistsService, $http, TokenService, $state){
+  function ArtistsController(ArtistsService, $http, TokenService, $state, $scope){
     var vm = this;
     vm.artistsAlerts = [];
     vm.approveArtist = approveArtist;
@@ -109,7 +109,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.logout = logout;
 
     function logout (){
-      console.log('click logout')
       TokenService.removeToken();
       $state.go('aboutus');
     }
@@ -137,7 +136,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       });
 
     function approveArtist(artist){
-      console.log('click approveArtist');
       vm.artistsAlerts.push(1);
       $http.put(`api/artists?approve=true&id=${artist._id}`)
         .then(function(response){
@@ -157,7 +155,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         });
       var index = vm.pendingArtists.indexOf(artist);
       vm.pendingArtists.splice(index, 1);
-      vm.rejected
+      vm.rejectedArtists.push(artist);
     } // this closes rejectArtist function
 
   }
@@ -226,7 +224,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       var strArr = str.split(' ');
       var newArr = strArr.map(function(el, wordIdx){
         if (el != 'of' && el != 'and'){
-          return el.charAt(0).toUpperCase() + el.slice(1);
+          return el.charAt(0).toUpperCase() + el.slice(1).toLowerCase();
         } else {
           return el;
         }
