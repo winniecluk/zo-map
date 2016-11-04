@@ -25,6 +25,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     $stateProvider
       .state('aboutus', {
         url: '/',
+        controller: 'AboutUsController as vm',
         templateUrl: 'templates/aboutus.html',
         authReq: false
       })
@@ -60,6 +61,31 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       })
     $urlRouterProvider.otherwise('/');
   }
+
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
+    .controller('AboutUsController', AboutUsController);
+
+  AboutUsController.$inject = ['$interval'];
+
+  function AboutUsController($interval){
+    var vm = this;
+
+    vm.image = 1;
+
+    var carousel = $interval(function(){
+      if (vm.image < 4) {
+        vm.image++;
+      } else {
+        vm.image = 1;
+      }
+    }, 3000);
+
+  } // this closes the controller function
 
 })();
 

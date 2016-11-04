@@ -1,0 +1,13 @@
+ul {
+  position: relative;
+  list-style-type: none;
+}
+
+.image {
+  text-align: center;
+}
+
+.content {
+  width: 80vw;
+  margin: 0 auto;
+}
