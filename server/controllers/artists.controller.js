@@ -3,7 +3,8 @@ var Artist = require('../models/artist');
 module.exports = {
   all: all,
   update: approve,
-  reject: reject
+  reject: reject,
+  create: create
 }
 
 function all (req, res, next){
@@ -30,6 +31,12 @@ function reject(req, res, next){
       if(err) return next(err);
       res.json({artist});
     })
+  });
+}
+
+function create (req, res, next){
+  Artist.create(req.body.newArtist, function(err, artist){
+    res.status(201).send(artist);
   });
 }
 

@@ -95,8 +95,8 @@ Artist.remove({})
   })
   .then(function(){
     var artist7 = new Artist({
-      f_name: 'Belaubre',
-      l_name: 'Frederic',
+      f_name: 'Frederic',
+      l_name: 'Belaubre',
       phone: '111-111-1111',
       email: 'belaubref@wanadoo.fr',
       website: 'fredericbelaubre.com',
