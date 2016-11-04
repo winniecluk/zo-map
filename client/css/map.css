@@ -28,6 +28,7 @@ body {
 console {
   display: block;
   height: 700px;
+  width: 1050px;
   margin: 60px auto;
   padding: 20px;
 }
