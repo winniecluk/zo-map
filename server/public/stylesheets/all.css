@@ -107,7 +107,7 @@ input[type=text] {
   margin-top: 30px;
   margin-left: 30px;
   margin-right: 10px;
-  width: 30vw;
+  width: 280px;
   font-size: 16px;
 }
 
@@ -125,20 +125,34 @@ button {
 /* for sign-up form */
 
 .form {
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
 }
 
-.form-row {
+/*.form-row {
   padding: 2vh 0 0 0;
-/*  display: flex;
-  justify-content: space-around;*/
+}*/
+
+label {
+  font-size: 22px;
+}
+
+
+select {
+  width: 224px;
+}
+
+textarea {
+  width: 60vw;
+  height: 150px;
+}
+
+td {
+  padding: 8px;
+  line-height: 60px;
 }
 
 
 
-label, textarea, button {
-  margin: 0 0 0 4px;
-}
 
 
