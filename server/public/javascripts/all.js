@@ -95,9 +95,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('ArtistsController', ArtistsController);
 
-  ArtistsController.$inject = ['ArtistsService', '$http'];
+  ArtistsController.$inject = ['ArtistsService', '$http', 'TokenService', '$state'];
 
-  function ArtistsController(ArtistsService, $http){
+  function ArtistsController(ArtistsService, $http, TokenService, $state){
     var vm = this;
     vm.artistsAlerts = [];
     vm.approveArtist = approveArtist;
@@ -106,6 +106,14 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.pendingArtists = [];
     vm.approvedArtists = [];
     vm.rejectedArtists = [];
+    vm.logout = logout;
+
+    function logout (){
+      console.log('click logout')
+      TokenService.removeToken();
+      $state.go('aboutus');
+    }
+
 
     function popAlert(){
       vm.artistsAlerts.pop();
