@@ -56,7 +56,7 @@ Artist.remove({})
       email: 'scott@ga.com',
       website: 'scottnaismith.com',
       city: 'Los Angeles',
-      country: 'Scotland',
+      country: 'United Kingdom',
       medium: 'painter',
       biography: 'I love painting.',
       approved: 0
