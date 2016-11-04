@@ -21,6 +21,7 @@
     $stateProvider
       .state('aboutus', {
         url: '/',
+        controller: 'AboutUsController as vm',
         templateUrl: 'templates/aboutus.html',
         authReq: false
       })
