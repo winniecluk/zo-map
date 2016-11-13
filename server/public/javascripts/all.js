@@ -259,6 +259,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       el.node.addEventListener('click', function(evt){
         $scope.$apply(function() {
           clearError();
+          // vm.searchInput = '';
           vm.countryArtists = el.data('artists');
           vm.selectedCountry = el.data('country');
         });

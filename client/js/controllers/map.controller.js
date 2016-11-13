@@ -63,6 +63,7 @@
       el.node.addEventListener('click', function(evt){
         $scope.$apply(function() {
           clearError();
+          // vm.searchInput = '';
           vm.countryArtists = el.data('artists');
           vm.selectedCountry = el.data('country');
         });
