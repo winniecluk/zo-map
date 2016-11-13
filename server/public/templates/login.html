@@ -5,7 +5,7 @@
     Username: <input type="text" ng-model="vm.username">
   </div>
   <div>
-    Password: <input type="text" ng-model="vm.password">
+    Password: <input type="password" ng-model="vm.password" ng-keypress="vm.enter($event)">
     <div class="center"><span class="red">{{vm.error}}</span></div>
   </div>
   <div>

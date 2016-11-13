@@ -70,9 +70,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('AboutUsController', AboutUsController);
 
-  AboutUsController.$inject = ['$interval'];
+  AboutUsController.$inject = ['$interval', 'TokenService'];
 
-  function AboutUsController($interval){
+  function AboutUsController($interval, TokenService){
     var vm = this;
 
     vm.image = 1;
@@ -108,6 +108,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.rejectedArtists = [];
     vm.logout = logout;
 
+
     function logout (){
       TokenService.removeToken();
       $state.go('aboutus');
@@ -132,14 +133,12 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
           }
         })
         vm.artists = artists;
-        // console.log(artists);
       });
 
     function approveArtist(artist){
       vm.artistsAlerts.push(1);
       $http.put(`api/artists?approve=true&id=${artist._id}`)
         .then(function(response){
-          console.log(response);
         });
       var index = vm.pendingArtists.indexOf(artist);
       vm.pendingArtists.splice(index, 1);
@@ -147,8 +146,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     }
 
     function rejectArtist(artist){
-      console.log('click rejectArtist');
-      // $http.put(`api/artists/reject/${artist._id}`)
       $http.put(`api/artists/reject?id=${artist._id}`)
         .then(function(response){
           console.log(response);
@@ -173,6 +170,13 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   function LogInController($http, LogInService, $state){
     var vm = this;
     vm.login = logIn;
+    vm.enter = enter;
+
+    function enter($event, username, password){
+      if ($event.keyCode === 13){
+        logIn(vm.username, vm.password);
+      }
+    }
 
     function logIn(username, password){
       LogInService.login(vm.username, vm.password)
@@ -196,64 +200,57 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('MapController', MapController);
 
-  MapController.$inject = ['MapService', 'CountriesService', '$http', '$scope'];
+  MapController.$inject = ['MapService', 'SearchService', '$http', '$scope'];
 
-  function MapController(MapService, CountriesService, $http, $scope){
+  function MapController(MapService, SearchService, $http, $scope){
     var vm = this;
     vm.searchInput;
-    vm.submitSearch = submitSearch
+    vm.submitSearch = SearchService.submitSearch;
+    vm.selectedCountry;
+    vm.countryArtists;
+    vm.countriesArr = [];
+    vm.enter = enter;
 
     MapService.renderMap();
+    getCountries();
 
-    CountriesService.getCountries(function(artistsArr, group_a) {
-      vm.artistsArr = artistsArr;
-      vm.group_a = group_a;
-      setUpEvtListeners(vm.group_a);
-    });
-
-    function submitSearch(input){
-      var searchableWord = makeSearchableWord(input);
-      var idx = vm.artistsArr.map(function(el){
-        return el.name;
-      }).indexOf(searchableWord);
-      vm.selectedCountry = vm.artistsArr[idx].name;
-      vm.countryArtists = vm.artistsArr[idx].artists;
+    function enter($event){
+      if ($event.keyCode === 13){
+        vm.submitSearch(vm.searchInput);
+      }
     }
 
-    function makeSearchableWord(str){
-      var strArr = str.split(' ');
-      var newArr = strArr.map(function(el, wordIdx){
-        if (el != 'of' && el != 'and'){
-          return el.charAt(0).toUpperCase() + el.slice(1).toLowerCase();
-        } else {
-          return el;
-        }
+    function getCountries(){
+      $http.get('/api/countries').then(function(response){
+        response.data.forEach(function(country, countryIdx){
+          vm.countriesArr.push(country);
+        });
+        var group_a = MapService.getGroup_a();
+        group_a.forEach(function(el, idx, arr){
+          el.data('country', vm.countriesArr[idx].name);
+          el.data('artists', vm.countriesArr[idx].artists);
+        })
+      setUpEvtListeners(group_a);
       })
-      return newArr.join(' ');
+    }
+
+    function clearError(){
+      vm.error = '';
     }
 
     function setUpEvtListeners(arr){
-      arr.forEach(function(el, idx, arr){
+      arr.forEach(function(el){
         addClickEvt(el);
-        addMouseover(el);
-        addMouseleave(el);
+        addMouseEvt(el, 'mouseover', 'gold', el.data('country'));
+        addMouseEvt(el, 'mouseleave', 'black', '');
       })
     }
 
-    function addMouseover(el){
-      el.node.addEventListener('mouseover', function(evt){
+    function addMouseEvt(el, mouseEvt, color, countryDisplay) {
+      el.node.addEventListener(mouseEvt, function(evt){
         $scope.$apply(function(){
-          el.node.setAttribute('fill', 'gold');
-          vm.country = el.data('country');
-        });
-      })
-    }
-
-    function addMouseleave(el){
-      el.node.addEventListener('mouseleave', function(evt){
-        $scope.$apply(function(){
-          el.node.setAttribute('fill', 'black');
-          vm.country = ''
+          el.node.setAttribute('fill', color);
+          vm.countryMap = countryDisplay;
         })
       })
     }
@@ -261,6 +258,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
         $scope.$apply(function() {
+          clearError();
           vm.countryArtists = el.data('artists');
           vm.selectedCountry = el.data('country');
         });
@@ -279,9 +277,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('SignUpController', SignUpController);
 
-  SignUpController.$inject = ['$http', '$state'];
+  SignUpController.$inject = ['$http', '$state', 'MapService'];
 
-  function SignUpController($http, $state){
+  function SignUpController($http, $state, MapService){
     var vm = this;
     vm.newArtist = {};
     vm.postArtist = postArtist;
@@ -310,7 +308,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function getArtists(){
       return $http.get('/api/artists')
         .then(function(response){
-        // console.log(response.data);
         return response.data;
       })
     } // close getArtists
@@ -337,46 +334,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function config($httpProvider){
       $httpProvider.interceptors.push('InterceptorService');
     }
-})();
-
-(function(){
-  'use strict';
-
-  angular.module('app')
-    .factory('CountriesService', CountriesService);
-
-  CountriesService.$inject = ['MapService', '$http'];
-
-  function CountriesService(MapService, $http){
-    MapService.renderMap();
-    var artistsArr = [];
-
-    function getCountries(cb){
-      $http.get('/api/countries').then(function(response){
-        response.data.forEach(function(country, countryIdx){
-          artistsArr.push(country);
-        });
-        var group_a = MapService.getGroup_a();
-        group_a.forEach(function(el, idx, arr){
-          el.data('country', artistsArr[idx].name);
-          el.data('artists', artistsArr[idx].artists);
-        })
-        cb(artistsArr, group_a);
-      })
-    }
-
-    // function getArtistsArr () {
-    //   return artistsArr
-    // }
-
-    var service = {
-      getCountries: getCountries
-    }
-
-    return service;
-  }
-
-
 })();
 
 (function(){
@@ -1358,11 +1315,12 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         ZW
       ); // this is the end of the push method on group_a
 
-    }
+    } // this closes renderMap function
 
     function getGroup_a() {
       return group_a;
     }
+
 
     var service = {
       getGroup_a: getGroup_a,
@@ -1379,11 +1337,73 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   'use strict';
 
   angular.module('app')
+    .factory('SearchService', SearchService);
+
+  function SearchService(){
+
+    function submitSearch(input){
+      var searchableWord = makeSearchableWord(input);
+      var idx = this.countriesArr.map(function(el){
+        return el.name;
+      }).indexOf(searchableWord);
+      if (idx != -1) {
+        this.error = '';
+        this.selectedCountry = this.countriesArr[idx].name;
+        this.countryArtists = this.countriesArr[idx].artists;
+      } else {
+        this.error = 'Country not found. Try again.';
+        this.selectedCountry = '';
+        this.countryArtists = '';
+      }
+    }
+
+    function makeSearchableWord(str){
+      var cleanArr = makeCleanArr(str);
+      var newArr = cleanArr.map(function(el, wordIdx){
+        if (el != 'of' && el != 'and'){
+          return el.charAt(0).toUpperCase() + el.slice(1).toLowerCase();
+        } else {
+          return el;
+        }
+      })
+      return newArr.join(' ');
+    }
+
+    function makeCleanArr(str){
+      var strArr = str.split(' ');
+      var cleanArr = [];
+      strArr.forEach(function(el, i, arr){
+        if (el){
+          cleanArr.push(el);
+        }
+      })
+      return cleanArr;
+    }
+
+    var service = {
+      submitSearch: submitSearch,
+      // makeSearchableWord: makeSearchableWord,
+      // makeCleanArr: makeCleanArr
+    }
+
+    return service;
+
+  } // this closes Search Service
+
+
+})();
+
+(function(){
+  'use strict';
+
+  angular.module('app')
     .factory('TokenService', TokenService);
 
   TokenService.$inject = ['$window'];
 
   function TokenService($window){
+
+    var loggedIn = true;
 
     function storeToken(token){
       return $window.localStorage.setItem('token', token);
@@ -1405,7 +1425,8 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       storeToken: storeToken,
       getToken: getToken,
       removeToken: removeToken,
-      decodeToken: decodeToken
+      decodeToken: decodeToken,
+      loggedIn: loggedIn
     }
 
     return service;

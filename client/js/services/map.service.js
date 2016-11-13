@@ -910,11 +910,12 @@
         ZW
       ); // this is the end of the push method on group_a
 
-    }
+    } // this closes renderMap function
 
     function getGroup_a() {
       return group_a;
     }
+
 
     var service = {
       getGroup_a: getGroup_a,

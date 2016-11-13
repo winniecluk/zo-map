@@ -9,6 +9,13 @@
   function LogInController($http, LogInService, $state){
     var vm = this;
     vm.login = logIn;
+    vm.enter = enter;
+
+    function enter($event, username, password){
+      if ($event.keyCode === 13){
+        logIn(vm.username, vm.password);
+      }
+    }
 
     function logIn(username, password){
       LogInService.login(vm.username, vm.password)

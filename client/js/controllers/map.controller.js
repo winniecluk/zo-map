@@ -4,64 +4,57 @@
   angular.module('app')
     .controller('MapController', MapController);
 
-  MapController.$inject = ['MapService', 'CountriesService', '$http', '$scope'];
+  MapController.$inject = ['MapService', 'SearchService', '$http', '$scope'];
 
-  function MapController(MapService, CountriesService, $http, $scope){
+  function MapController(MapService, SearchService, $http, $scope){
     var vm = this;
     vm.searchInput;
-    vm.submitSearch = submitSearch
+    vm.submitSearch = SearchService.submitSearch;
+    vm.selectedCountry;
+    vm.countryArtists;
+    vm.countriesArr = [];
+    vm.enter = enter;
 
     MapService.renderMap();
+    getCountries();
 
-    CountriesService.getCountries(function(artistsArr, group_a) {
-      vm.artistsArr = artistsArr;
-      vm.group_a = group_a;
-      setUpEvtListeners(vm.group_a);
-    });
-
-    function submitSearch(input){
-      var searchableWord = makeSearchableWord(input);
-      var idx = vm.artistsArr.map(function(el){
-        return el.name;
-      }).indexOf(searchableWord);
-      vm.selectedCountry = vm.artistsArr[idx].name;
-      vm.countryArtists = vm.artistsArr[idx].artists;
+    function enter($event){
+      if ($event.keyCode === 13){
+        vm.submitSearch(vm.searchInput);
+      }
     }
 
-    function makeSearchableWord(str){
-      var strArr = str.split(' ');
-      var newArr = strArr.map(function(el, wordIdx){
-        if (el != 'of' && el != 'and'){
-          return el.charAt(0).toUpperCase() + el.slice(1).toLowerCase();
-        } else {
-          return el;
-        }
+    function getCountries(){
+      $http.get('/api/countries').then(function(response){
+        response.data.forEach(function(country, countryIdx){
+          vm.countriesArr.push(country);
+        });
+        var group_a = MapService.getGroup_a();
+        group_a.forEach(function(el, idx, arr){
+          el.data('country', vm.countriesArr[idx].name);
+          el.data('artists', vm.countriesArr[idx].artists);
+        })
+      setUpEvtListeners(group_a);
       })
-      return newArr.join(' ');
+    }
+
+    function clearError(){
+      vm.error = '';
     }
 
     function setUpEvtListeners(arr){
-      arr.forEach(function(el, idx, arr){
+      arr.forEach(function(el){
         addClickEvt(el);
-        addMouseover(el);
-        addMouseleave(el);
+        addMouseEvt(el, 'mouseover', 'gold', el.data('country'));
+        addMouseEvt(el, 'mouseleave', 'black', '');
       })
     }
 
-    function addMouseover(el){
-      el.node.addEventListener('mouseover', function(evt){
+    function addMouseEvt(el, mouseEvt, color, countryDisplay) {
+      el.node.addEventListener(mouseEvt, function(evt){
         $scope.$apply(function(){
-          el.node.setAttribute('fill', 'gold');
-          vm.country = el.data('country');
-        });
-      })
-    }
-
-    function addMouseleave(el){
-      el.node.addEventListener('mouseleave', function(evt){
-        $scope.$apply(function(){
-          el.node.setAttribute('fill', 'black');
-          vm.country = ''
+          el.node.setAttribute('fill', color);
+          vm.countryMap = countryDisplay;
         })
       })
     }
@@ -69,6 +62,7 @@
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
         $scope.$apply(function() {
+          clearError();
           vm.countryArtists = el.data('artists');
           vm.selectedCountry = el.data('country');
         });

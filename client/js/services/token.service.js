@@ -8,6 +8,8 @@
 
   function TokenService($window){
 
+    var loggedIn = true;
+
     function storeToken(token){
       return $window.localStorage.setItem('token', token);
     }
@@ -28,7 +30,8 @@
       storeToken: storeToken,
       getToken: getToken,
       removeToken: removeToken,
-      decodeToken: decodeToken
+      decodeToken: decodeToken,
+      loggedIn: loggedIn
     }
 
     return service;
