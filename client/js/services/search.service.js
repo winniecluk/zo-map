@@ -12,6 +12,7 @@
         return el.name;
       }).indexOf(searchableWord);
       if (idx != -1) {
+        this.error = '';
         this.selectedCountry = this.countriesArr[idx].name;
         this.countryArtists = this.countriesArr[idx].artists;
       } else {

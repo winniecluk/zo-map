@@ -28,7 +28,7 @@ console {
   padding: 20px;
 }
 
-search {
+.search {
   display: block;
   margin: 20px;
   border: 1px solid black;

@@ -204,7 +204,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.submitSearch = SearchService.submitSearch;
     vm.selectedCountry;
     vm.countryArtists;
-
     vm.countriesArr = [];
 
     MapService.renderMap();
@@ -223,52 +222,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       setUpEvtListeners(group_a);
       })
     }
-
-    function submitSearch(input){
-      clearError();
-      SearchService.submitSearch(input);
-    }
-
-    // search functions
-
-    // function submitSearch(input){
-    //   clearError();
-    //   var searchableWord = makeSearchableWord(input);
-    //   var idx = vm.countriesArr.map(function(el){
-    //     return el.name;
-    //   }).indexOf(searchableWord);
-    //   if (idx != -1) {
-    //     vm.selectedCountry = vm.countriesArr[idx].name;
-    //     vm.countryArtists = vm.countriesArr[idx].artists;
-    //   } else {
-    //     vm.error = 'Country not found. Try again.';
-    //   }
-    // }
-
-    // function makeSearchableWord(str){
-    //   var cleanArr = makeCleanArr(str);
-    //   var newArr = cleanArr.map(function(el, wordIdx){
-    //     if (el != 'of' && el != 'and'){
-    //       return el.charAt(0).toUpperCase() + el.slice(1).toLowerCase();
-    //     } else {
-    //       return el;
-    //     }
-    //   })
-    //   return newArr.join(' ');
-    // }
-
-    // function makeCleanArr(str){
-    //   var strArr = str.split(' ');
-    //   var cleanArr = [];
-    //   strArr.forEach(function(el, i, arr){
-    //     if (el){
-    //       cleanArr.push(el);
-    //     }
-    //   })
-    //   return cleanArr;
-    // }
-
-    // this ends search functions
 
     function clearError(){
       vm.error = '';
@@ -1384,6 +1337,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         return el.name;
       }).indexOf(searchableWord);
       if (idx != -1) {
+        this.error = '';
         this.selectedCountry = this.countriesArr[idx].name;
         this.countryArtists = this.countriesArr[idx].artists;
       } else {
