@@ -60,9 +60,10 @@ Instructions:
 ##<a name="routes">Routes</a>
 |URI|HTTP request|Use case|Auth Req?|
 |---|------------|--------|---------|
-|/countries|GET|get the data for all the countries for map display|false|
-|/artists|GET|get the data for all the artists for admin to check|true|
-|/artists|PUT|approve the artist for map display|false|
-|/artists/reject|PUT|reject the artist|false|
-|/artists|POST|artist submit their information to the database, creating a new artist|false|
+|api/countries|GET|get the data for all the countries for map display|false|
+|api/artists|GET|get the data for all the artists for admin to check|true|
+|api/artists|PUT|approve the artist for map display|false|
+|api/artists/reject|PUT|reject the artist|false|
+|api/artists|POST|artist submit their information to the database, creating a new artist|false|
+|api/artists|DELETE|empty database of all rejected artists|false|
 |/login|GET|admin logs in|false|

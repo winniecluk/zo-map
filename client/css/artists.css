@@ -33,3 +33,8 @@
 .floatright {
   float: right;
 }
+
+.button-right {
+  display: inline-block;
+  float: right;
+}
