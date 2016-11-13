@@ -196,20 +196,33 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('MapController', MapController);
 
-  MapController.$inject = ['MapService', 'CountriesService', '$http', '$scope'];
+  MapController.$inject = ['MapService', '$http', '$scope'];
 
-  function MapController(MapService, CountriesService, $http, $scope){
+  function MapController(MapService, $http, $scope){
     var vm = this;
     vm.searchInput;
-    vm.submitSearch = submitSearch
+    vm.submitSearch = submitSearch;
+    vm.selectedCountry;
+    vm.countryArtists;
+
+    vm.artistsArr = [];
 
     MapService.renderMap();
+    getCountries();
 
-    CountriesService.getCountries(function(artistsArr, group_a) {
-      vm.artistsArr = artistsArr;
-      vm.group_a = group_a;
-      setUpEvtListeners(vm.group_a);
-    });
+    function getCountries(){
+      $http.get('/api/countries').then(function(response){
+        response.data.forEach(function(country, countryIdx){
+          vm.artistsArr.push(country);
+        });
+        var group_a = MapService.getGroup_a();
+        group_a.forEach(function(el, idx, arr){
+          el.data('country', vm.artistsArr[idx].name);
+          el.data('artists', vm.artistsArr[idx].artists);
+        })
+      setUpEvtListeners(group_a);
+      })
+    }
 
     function submitSearch(input){
       var searchableWord = makeSearchableWord(input);
@@ -233,27 +246,18 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     }
 
     function setUpEvtListeners(arr){
-      arr.forEach(function(el, idx, arr){
+      arr.forEach(function(el){
         addClickEvt(el);
-        addMouseover(el);
-        addMouseleave(el);
+        addMouseEvt(el, 'mouseover', 'gold', el.data('country'));
+        addMouseEvt(el, 'mouseleave', 'black', '');
       })
     }
 
-    function addMouseover(el){
-      el.node.addEventListener('mouseover', function(evt){
+    function addMouseEvt(el, mouseEvt, color, countryDisplay) {
+      el.node.addEventListener(mouseEvt, function(evt){
         $scope.$apply(function(){
-          el.node.setAttribute('fill', 'gold');
-          vm.country = el.data('country');
-        });
-      })
-    }
-
-    function addMouseleave(el){
-      el.node.addEventListener('mouseleave', function(evt){
-        $scope.$apply(function(){
-          el.node.setAttribute('fill', 'black');
-          vm.country = ''
+          el.node.setAttribute('fill', color);
+          vm.country = countryDisplay;
         })
       })
     }
@@ -1358,11 +1362,12 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         ZW
       ); // this is the end of the push method on group_a
 
-    }
+    } // this closes renderMap function
 
     function getGroup_a() {
       return group_a;
     }
+
 
     var service = {
       getGroup_a: getGroup_a,
