@@ -70,9 +70,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('AboutUsController', AboutUsController);
 
-  AboutUsController.$inject = ['$interval'];
+  AboutUsController.$inject = ['$interval', 'TokenService'];
 
-  function AboutUsController($interval){
+  function AboutUsController($interval, TokenService){
     var vm = this;
 
     vm.image = 1;
@@ -108,6 +108,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.rejectedArtists = [];
     vm.logout = logout;
 
+
     function logout (){
       TokenService.removeToken();
       $state.go('aboutus');
@@ -132,14 +133,12 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
           }
         })
         vm.artists = artists;
-        // console.log(artists);
       });
 
     function approveArtist(artist){
       vm.artistsAlerts.push(1);
       $http.put(`api/artists?approve=true&id=${artist._id}`)
         .then(function(response){
-          console.log(response);
         });
       var index = vm.pendingArtists.indexOf(artist);
       vm.pendingArtists.splice(index, 1);
@@ -147,8 +146,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     }
 
     function rejectArtist(artist){
-      console.log('click rejectArtist');
-      // $http.put(`api/artists/reject/${artist._id}`)
       $http.put(`api/artists/reject?id=${artist._id}`)
         .then(function(response){
           console.log(response);
@@ -173,6 +170,13 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   function LogInController($http, LogInService, $state){
     var vm = this;
     vm.login = logIn;
+    vm.enter = enter;
+
+    function enter($event, username, password){
+      if ($event.keyCode === 13){
+        logIn(vm.username, vm.password);
+      }
+    }
 
     function logIn(username, password){
       LogInService.login(vm.username, vm.password)
@@ -205,9 +209,16 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.selectedCountry;
     vm.countryArtists;
     vm.countriesArr = [];
+    vm.enter = enter;
 
     MapService.renderMap();
     getCountries();
+
+    function enter($event){
+      if ($event.keyCode === 13){
+        vm.submitSearch(vm.searchInput);
+      }
+    }
 
     function getCountries(){
       $http.get('/api/countries').then(function(response){
@@ -266,9 +277,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('SignUpController', SignUpController);
 
-  SignUpController.$inject = ['$http', '$state'];
+  SignUpController.$inject = ['$http', '$state', 'MapService'];
 
-  function SignUpController($http, $state){
+  function SignUpController($http, $state, MapService){
     var vm = this;
     vm.newArtist = {};
     vm.postArtist = postArtist;
@@ -297,7 +308,6 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function getArtists(){
       return $http.get('/api/artists')
         .then(function(response){
-        // console.log(response.data);
         return response.data;
       })
     } // close getArtists
@@ -1393,6 +1403,8 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
 
   function TokenService($window){
 
+    var loggedIn = true;
+
     function storeToken(token){
       return $window.localStorage.setItem('token', token);
     }
@@ -1413,7 +1425,8 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       storeToken: storeToken,
       getToken: getToken,
       removeToken: removeToken,
-      decodeToken: decodeToken
+      decodeToken: decodeToken,
+      loggedIn: loggedIn
     }
 
     return service;

@@ -17,6 +17,7 @@
     vm.rejectedArtists = [];
     vm.logout = logout;
 
+
     function logout (){
       TokenService.removeToken();
       $state.go('aboutus');
@@ -41,14 +42,12 @@
           }
         })
         vm.artists = artists;
-        // console.log(artists);
       });
 
     function approveArtist(artist){
       vm.artistsAlerts.push(1);
       $http.put(`api/artists?approve=true&id=${artist._id}`)
         .then(function(response){
-          console.log(response);
         });
       var index = vm.pendingArtists.indexOf(artist);
       vm.pendingArtists.splice(index, 1);
@@ -56,8 +55,6 @@
     }
 
     function rejectArtist(artist){
-      console.log('click rejectArtist');
-      // $http.put(`api/artists/reject/${artist._id}`)
       $http.put(`api/artists/reject?id=${artist._id}`)
         .then(function(response){
           console.log(response);

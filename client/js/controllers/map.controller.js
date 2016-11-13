@@ -13,9 +13,16 @@
     vm.selectedCountry;
     vm.countryArtists;
     vm.countriesArr = [];
+    vm.enter = enter;
 
     MapService.renderMap();
     getCountries();
+
+    function enter($event){
+      if ($event.keyCode === 13){
+        vm.submitSearch(vm.searchInput);
+      }
+    }
 
     function getCountries(){
       $http.get('/api/countries').then(function(response){

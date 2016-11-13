@@ -4,9 +4,9 @@
   angular.module('app')
     .controller('AboutUsController', AboutUsController);
 
-  AboutUsController.$inject = ['$interval'];
+  AboutUsController.$inject = ['$interval', 'TokenService'];
 
-  function AboutUsController($interval){
+  function AboutUsController($interval, TokenService){
     var vm = this;
 
     vm.image = 1;

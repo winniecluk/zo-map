@@ -8,10 +8,11 @@ jwtOptions = {
 
 function makeToken(req, res, next){
   if (!req.body.username || !req.body.password){
-    return next({
-      status: 401,
-      message: 'Missing username and/or password'
-    })
+    // return next({
+    //   status: 401,
+    //   message: 'Missing username and/or password'
+    // })
+    res.status(401).json({error: 'Missing username and/or password'});
   }
   User.findOne({ 'username' : req.body.username })
   // now check password
@@ -19,7 +20,6 @@ function makeToken(req, res, next){
       if (!user || !user.verifyPasswordSync(req.body.password)){
         return res.status(400).json({error: 'Bad credentials.'});
       }
-      console.log(user);
       var token = jwt.sign({user: user.username}, jwtSecret, jwtOptions);
       return res.json({
         token: token
@@ -34,8 +34,6 @@ function checkToken(req, res, next){
   var token = req.get('Authorization').split(' ')[1];
   console.log(token);
   jwt.verify(token, jwtSecret, function(err, decoded){
-    // if (err) return next(err);
-    // req.decoded = decoded;
     next();
   })
 }
