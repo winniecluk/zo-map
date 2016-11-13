@@ -2,7 +2,7 @@
   <div id="map">
   </div>
   <div id="identifier">
-    {{vm.country}}
+    {{vm.countryMap}}
   </div>
 
   <console>
@@ -11,7 +11,9 @@
         Click on a country or search for it below:
       </div>
       <input type="text" ng-model="vm.searchInput"><button ng-click="vm.submitSearch(vm.searchInput)">Submit</button>
+      {{vm.error}}
     </search>
+      <div></div>
       <div class="heading">{{vm.selectedCountry | uppercase}}</div>
     <info>
       <div ng-repeat="artist in vm.countryArtists track by $index" ng-if="artist.approved">

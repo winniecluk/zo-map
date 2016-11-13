@@ -205,7 +205,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.selectedCountry;
     vm.countryArtists;
 
-    vm.artistsArr = [];
+    vm.countriesArr = [];
 
     MapService.renderMap();
     getCountries();
@@ -213,29 +213,34 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function getCountries(){
       $http.get('/api/countries').then(function(response){
         response.data.forEach(function(country, countryIdx){
-          vm.artistsArr.push(country);
+          vm.countriesArr.push(country);
         });
         var group_a = MapService.getGroup_a();
         group_a.forEach(function(el, idx, arr){
-          el.data('country', vm.artistsArr[idx].name);
-          el.data('artists', vm.artistsArr[idx].artists);
+          el.data('country', vm.countriesArr[idx].name);
+          el.data('artists', vm.countriesArr[idx].artists);
         })
       setUpEvtListeners(group_a);
       })
     }
 
     function submitSearch(input){
+      clearError();
       var searchableWord = makeSearchableWord(input);
-      var idx = vm.artistsArr.map(function(el){
+      var idx = vm.countriesArr.map(function(el){
         return el.name;
       }).indexOf(searchableWord);
-      vm.selectedCountry = vm.artistsArr[idx].name;
-      vm.countryArtists = vm.artistsArr[idx].artists;
+      if (idx != -1) {
+        vm.selectedCountry = vm.countriesArr[idx].name;
+        vm.countryArtists = vm.countriesArr[idx].artists;
+      } else {
+        vm.error = 'Country not found. Try again.';
+      }
     }
 
     function makeSearchableWord(str){
-      var strArr = str.split(' ');
-      var newArr = strArr.map(function(el, wordIdx){
+      var cleanArr = makeCleanArr(str);
+      var newArr = cleanArr.map(function(el, wordIdx){
         if (el != 'of' && el != 'and'){
           return el.charAt(0).toUpperCase() + el.slice(1).toLowerCase();
         } else {
@@ -243,6 +248,21 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         }
       })
       return newArr.join(' ');
+    }
+
+    function makeCleanArr(str){
+      var strArr = str.split(' ');
+      var cleanArr = [];
+      strArr.forEach(function(el, i, arr){
+        if (el){
+          cleanArr.push(el);
+        }
+      })
+      return cleanArr;
+    }
+
+    function clearError(){
+      vm.error = '';
     }
 
     function setUpEvtListeners(arr){
@@ -257,7 +277,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       el.node.addEventListener(mouseEvt, function(evt){
         $scope.$apply(function(){
           el.node.setAttribute('fill', color);
-          vm.country = countryDisplay;
+          vm.countryMap = countryDisplay;
         })
       })
     }
@@ -265,6 +285,7 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     function addClickEvt(el){
       el.node.addEventListener('click', function(evt){
         $scope.$apply(function() {
+          clearError();
           vm.countryArtists = el.data('artists');
           vm.selectedCountry = el.data('country');
         });
