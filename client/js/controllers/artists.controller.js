@@ -16,7 +16,17 @@
     vm.approvedArtists = [];
     vm.rejectedArtists = [];
     vm.logout = logout;
+    vm.empty = empty;
 
+    function empty(){
+      console.log('clicked empty');
+      $http.delete('api/artists').then(function(response){
+        console.log(response);
+      }, function(err){
+        console.log(err);
+      })
+      vm.rejectedArtists = [];
+    }
 
     function logout (){
       TokenService.removeToken();
