@@ -52,6 +52,11 @@ ul {
   float: right;
 }
 
+.button-right {
+  display: inline-block;
+  float: right;
+}
+
 .page {
   width: 100vw;
   height: 280px;

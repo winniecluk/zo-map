@@ -48,4 +48,11 @@ router.post('/artists', function(req, res, next){
   );
 })
 
+router.delete('/artists', function(req, res, next){
+  Artist.remove({approved: 2}, function(err){
+    if (err) return handleError(err);
+    res.status(200).send('deleted');
+  })
+})
+
 module.exports = router;

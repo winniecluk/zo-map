@@ -30,6 +30,6 @@
 </div>
 
 <div class="sector">
-<div class="heading">Rejected Artists</div>
+<div class="heading">Rejected Artists<button class="button-right" ng-click="vm.empty()">Empty All</button></div>
 <div ng-repeat="artist in vm.rejectedArtists track by $index" ng-if="artist.approved == 2">{{artist.f_name}} {{artist.l_name}}</div>
 </div>
