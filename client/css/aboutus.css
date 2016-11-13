@@ -7,6 +7,10 @@ ul {
   text-align: center;
 }
 
+.image img {
+  width: 80vw;
+}
+
 .content {
   width: 80vw;
   margin: 0 auto;
