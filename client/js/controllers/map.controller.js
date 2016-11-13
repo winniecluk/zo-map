@@ -4,12 +4,12 @@
   angular.module('app')
     .controller('MapController', MapController);
 
-  MapController.$inject = ['MapService', '$http', '$scope'];
+  MapController.$inject = ['MapService', 'SearchService', '$http', '$scope'];
 
-  function MapController(MapService, $http, $scope){
+  function MapController(MapService, SearchService, $http, $scope){
     var vm = this;
     vm.searchInput;
-    vm.submitSearch = submitSearch;
+    vm.submitSearch = SearchService.submitSearch;
     vm.selectedCountry;
     vm.countryArtists;
 
@@ -34,40 +34,49 @@
 
     function submitSearch(input){
       clearError();
-      var searchableWord = makeSearchableWord(input);
-      var idx = vm.countriesArr.map(function(el){
-        return el.name;
-      }).indexOf(searchableWord);
-      if (idx != -1) {
-        vm.selectedCountry = vm.countriesArr[idx].name;
-        vm.countryArtists = vm.countriesArr[idx].artists;
-      } else {
-        vm.error = 'Country not found. Try again.';
-      }
+      SearchService.submitSearch(input);
     }
 
-    function makeSearchableWord(str){
-      var cleanArr = makeCleanArr(str);
-      var newArr = cleanArr.map(function(el, wordIdx){
-        if (el != 'of' && el != 'and'){
-          return el.charAt(0).toUpperCase() + el.slice(1).toLowerCase();
-        } else {
-          return el;
-        }
-      })
-      return newArr.join(' ');
-    }
+    // search functions
 
-    function makeCleanArr(str){
-      var strArr = str.split(' ');
-      var cleanArr = [];
-      strArr.forEach(function(el, i, arr){
-        if (el){
-          cleanArr.push(el);
-        }
-      })
-      return cleanArr;
-    }
+    // function submitSearch(input){
+    //   clearError();
+    //   var searchableWord = makeSearchableWord(input);
+    //   var idx = vm.countriesArr.map(function(el){
+    //     return el.name;
+    //   }).indexOf(searchableWord);
+    //   if (idx != -1) {
+    //     vm.selectedCountry = vm.countriesArr[idx].name;
+    //     vm.countryArtists = vm.countriesArr[idx].artists;
+    //   } else {
+    //     vm.error = 'Country not found. Try again.';
+    //   }
+    // }
+
+    // function makeSearchableWord(str){
+    //   var cleanArr = makeCleanArr(str);
+    //   var newArr = cleanArr.map(function(el, wordIdx){
+    //     if (el != 'of' && el != 'and'){
+    //       return el.charAt(0).toUpperCase() + el.slice(1).toLowerCase();
+    //     } else {
+    //       return el;
+    //     }
+    //   })
+    //   return newArr.join(' ');
+    // }
+
+    // function makeCleanArr(str){
+    //   var strArr = str.split(' ');
+    //   var cleanArr = [];
+    //   strArr.forEach(function(el, i, arr){
+    //     if (el){
+    //       cleanArr.push(el);
+    //     }
+    //   })
+    //   return cleanArr;
+    // }
+
+    // this ends search functions
 
     function clearError(){
       vm.error = '';
