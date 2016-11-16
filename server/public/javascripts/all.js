@@ -70,12 +70,14 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('AboutUsController', AboutUsController);
 
-  AboutUsController.$inject = ['$interval', 'TokenService'];
+  AboutUsController.$inject = ['$interval', 'TokenService', 'LogInService'];
 
-  function AboutUsController($interval, TokenService){
+  function AboutUsController($interval, TokenService, LogInService){
     var vm = this;
-
+    vm.logout = LogInService.logout;
     vm.image = 1;
+
+    LogInService.showLogout();
 
     var carousel = $interval(function(){
       if (vm.image < 4) {
@@ -95,9 +97,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('ArtistsController', ArtistsController);
 
-  ArtistsController.$inject = ['ArtistsService', '$http', 'TokenService', '$state', '$scope'];
+  ArtistsController.$inject = ['ArtistsService', '$http', 'TokenService', '$state', '$scope', 'LogInService'];
 
-  function ArtistsController(ArtistsService, $http, TokenService, $state, $scope){
+  function ArtistsController(ArtistsService, $http, TokenService, $state, $scope, LogInService){
     var vm = this;
     vm.artistsAlerts = [];
     vm.approveArtist = approveArtist;
@@ -106,8 +108,10 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.pendingArtists = [];
     vm.approvedArtists = [];
     vm.rejectedArtists = [];
-    vm.logout = logout;
+    // vm.logout = logout;
     vm.empty = empty;
+
+    LogInService.showLogout();
 
     function empty(){
       console.log('clicked empty');
@@ -119,10 +123,10 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
       vm.rejectedArtists = [];
     }
 
-    function logout (){
-      TokenService.removeToken();
-      $state.go('aboutus');
-    }
+    // function logout (){
+    //   TokenService.removeToken();
+    //   $state.go('aboutus');
+    // }
 
 
     function popAlert(){
@@ -210,9 +214,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('MapController', MapController);
 
-  MapController.$inject = ['MapService', 'SearchService', '$http', '$scope'];
+  MapController.$inject = ['MapService', 'SearchService', '$http', '$scope', 'LogInService'];
 
-  function MapController(MapService, SearchService, $http, $scope){
+  function MapController(MapService, SearchService, $http, $scope, LogInService){
     var vm = this;
     vm.searchInput;
     vm.submitSearch = SearchService.submitSearch;
@@ -220,6 +224,8 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
     vm.countryArtists;
     vm.countriesArr = [];
     vm.enter = enter;
+    LogInService.showLogout();
+
 
     MapService.renderMap();
     getCountries();
@@ -288,13 +294,15 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .controller('SignUpController', SignUpController);
 
-  SignUpController.$inject = ['$http', '$state', 'MapService'];
+  SignUpController.$inject = ['$http', '$state', 'MapService', 'LogInService'];
 
-  function SignUpController($http, $state, MapService){
+  function SignUpController($http, $state, MapService, LogInService){
     var vm = this;
     vm.newArtist = {};
     vm.postArtist = postArtist;
     vm.blankForm = true;
+    LogInService.showLogout();
+
 
     function postArtist(evt){
       var newArtist = vm.newArtist;
@@ -380,9 +388,9 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
   angular.module('app')
     .factory('LogInService', LogInService);
 
-  LogInService.$inject = ['TokenService', '$http']
+  LogInService.$inject = ['TokenService', '$http', '$rootScope', '$state']
 
-  function LogInService(TokenService, $http){
+  function LogInService(TokenService, $http, $rootScope, $state){
 
     function login(username, password){
       return $http.post('/login', {username, password})
@@ -396,17 +404,33 @@ i._.arrows&&("startString"in i._.arrows&&_(i,i._.arrows.startString),"endString"
         })
     }
 
+    $rootScope.logout = function(){
+      TokenService.removeToken();
+      $state.go('aboutus');
+    }
+
     function getUser(){
       var token = TokenService.getToken();
       if (token){
         var user = TokenService.decodeToken(token);
         return user;
+      } else {
+        return false;
+      }
+    }
+
+    function showLogout(){
+      if (getUser()){
+        $rootScope.loggedIn = true;
+      } else {
+        $rootScope.loggedIn = false;
       }
     }
 
     var service = {
       login: login,
-      getUser: getUser
+      getUser: getUser,
+      showLogout: showLogout,
     }
 
     return service;

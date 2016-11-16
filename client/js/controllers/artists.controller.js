@@ -4,9 +4,9 @@
   angular.module('app')
     .controller('ArtistsController', ArtistsController);
 
-  ArtistsController.$inject = ['ArtistsService', '$http', 'TokenService', '$state', '$scope'];
+  ArtistsController.$inject = ['ArtistsService', '$http', 'TokenService', '$state', '$scope', 'LogInService'];
 
-  function ArtistsController(ArtistsService, $http, TokenService, $state, $scope){
+  function ArtistsController(ArtistsService, $http, TokenService, $state, $scope, LogInService){
     var vm = this;
     vm.artistsAlerts = [];
     vm.approveArtist = approveArtist;
@@ -15,8 +15,10 @@
     vm.pendingArtists = [];
     vm.approvedArtists = [];
     vm.rejectedArtists = [];
-    vm.logout = logout;
+    // vm.logout = logout;
     vm.empty = empty;
+
+    LogInService.showLogout();
 
     function empty(){
       console.log('clicked empty');
@@ -28,10 +30,10 @@
       vm.rejectedArtists = [];
     }
 
-    function logout (){
-      TokenService.removeToken();
-      $state.go('aboutus');
-    }
+    // function logout (){
+    //   TokenService.removeToken();
+    //   $state.go('aboutus');
+    // }
 
 
     function popAlert(){

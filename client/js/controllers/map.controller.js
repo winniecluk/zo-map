@@ -4,9 +4,9 @@
   angular.module('app')
     .controller('MapController', MapController);
 
-  MapController.$inject = ['MapService', 'SearchService', '$http', '$scope'];
+  MapController.$inject = ['MapService', 'SearchService', '$http', '$scope', 'LogInService'];
 
-  function MapController(MapService, SearchService, $http, $scope){
+  function MapController(MapService, SearchService, $http, $scope, LogInService){
     var vm = this;
     vm.searchInput;
     vm.submitSearch = SearchService.submitSearch;
@@ -14,6 +14,8 @@
     vm.countryArtists;
     vm.countriesArr = [];
     vm.enter = enter;
+    LogInService.showLogout();
+
 
     MapService.renderMap();
     getCountries();

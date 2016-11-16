@@ -4,13 +4,15 @@
   angular.module('app')
     .controller('SignUpController', SignUpController);
 
-  SignUpController.$inject = ['$http', '$state', 'MapService'];
+  SignUpController.$inject = ['$http', '$state', 'MapService', 'LogInService'];
 
-  function SignUpController($http, $state, MapService){
+  function SignUpController($http, $state, MapService, LogInService){
     var vm = this;
     vm.newArtist = {};
     vm.postArtist = postArtist;
     vm.blankForm = true;
+    LogInService.showLogout();
+
 
     function postArtist(evt){
       var newArtist = vm.newArtist;
