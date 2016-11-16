@@ -1,16 +1,18 @@
-<div class="title">Log In</div>
-<div class="page">
-<div class="login">
-  <div>
-    Username: <input type="text" ng-model="vm.username">
+<div class="container">
+  <div class="title">Log In</div>
+  <div class="login">
+    <div class="col s8">
+      <label class="small" for="username">Username:</label>
+      <input id="username" type="text" ng-model="vm.username">
+    </div>
+    <div>
+      <label class="small">Password:</label>
+      <input type="password" ng-model="vm.password" ng-keypress="vm.enter($event)">
+      <div class="center"><span class="red">{{vm.error}}</span></div>
+    </div>
+    <div>
+      <button class="btn" ng-click="vm.login()">Submit</button>
+    </div>
   </div>
-  <div>
-    Password: <input type="password" ng-model="vm.password" ng-keypress="vm.enter($event)">
-    <div class="center"><span class="red">{{vm.error}}</span></div>
-  </div>
-  <div>
-    <button ng-click="vm.login()">Submit</button>
-  </div>
-</div>
 </div>
 
