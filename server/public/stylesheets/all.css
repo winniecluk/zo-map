@@ -25,6 +25,10 @@ nav {
   height: 80px;
 }
 
+footer {
+  padding: 5%;
+}
+
 .image {
   text-align: center;
 }
@@ -109,9 +113,9 @@ nav {
   color: red;
 }
 
-* {
+/** {
   border: 1px solid red;
-}
+}*/
 
 body {
   background-color: #FFFFFF;
@@ -151,7 +155,6 @@ console {
 .input {
   display: flex;
   align-items: center;
-  margin
 }
 
 .heading {

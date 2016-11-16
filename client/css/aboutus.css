@@ -25,6 +25,10 @@ nav {
   height: 80px;
 }
 
+footer {
+  padding: 5%;
+}
+
 .image {
   text-align: center;
 }
