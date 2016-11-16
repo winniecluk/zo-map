@@ -27,11 +27,16 @@
 .notice {
   background-color: #D9F0A0;
   color: green;
-  margin: 10px 20px;
+  margin: 10px auto;
+  width: 70vw;
 }
 
 .floatright {
   float: right;
+}
+
+.x {
+  padding-right: 10px;
 }
 
 .button-right {

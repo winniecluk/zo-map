@@ -25,6 +25,7 @@
       <li><a ui-sref="aboutus">ABOUT US</a></li>
       <li><a ui-sref="map">ARTISTS' MAP</a></li>
       <li><a ui-sref="signup">SIGN UP</a></li>
+      <li ng-show="loggedIn"><a ng-click="logout()">LOG OUT</a></li>
     </ul>
   </div>
 </nav>
