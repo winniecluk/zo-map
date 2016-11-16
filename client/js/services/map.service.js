@@ -12,10 +12,14 @@
 
     function renderMap() {
       document.getElementById('map').innerHTML = '';
-      rsr = Raphael('map', '1050', '700');
+      rsr = Raphael('map');
+      rsr.setViewBox(0, 0, 1050, 700, true);
       rsrGroups = [group_a];
       group_a = rsr.set();
 
+      var svg = document.querySelector("svg");
+      svg.removeAttribute("width");
+      svg.removeAttribute("height");
       // path creates the borders of the country
 
       // Afghanistan

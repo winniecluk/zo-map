@@ -1,3 +1,5 @@
+
+<div class="container">
   <div class="title">ZO Artists' Map</div>
   <div id="map">
   </div>
@@ -10,8 +12,18 @@
       <div>
         Click on a country or search for it below:
       </div>
-      <input type="text" ng-model="vm.searchInput" ng-keypress="vm.enter($event)"><button ng-click="vm.submitSearch(vm.searchInput)">Submit</button>
-      <div>{{vm.error}}</div>
+      <div class="row input">
+        <div class="input-field col m8 s12">
+          <input type="text" ng-model="vm.searchInput" ng-keypress="vm.enter($event)">
+          <label>Country</label>
+        </div>
+        <div class="col m4 s12">
+          <button class="btn waves" ng-click="vm.submitSearch(vm.searchInput)">
+            Submit
+          </button>
+        </div>
+      </div>
+      <div class="error">{{vm.error}}</div>
     </div>
       <div></div>
       <div class="heading">{{vm.selectedCountry | uppercase}}</div>
@@ -25,4 +37,5 @@
       </div>
     </info>
   </console>
+</div>
 
