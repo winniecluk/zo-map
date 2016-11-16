@@ -3,15 +3,38 @@ ul {
   list-style-type: none;
 }
 
+li {
+  height: 80px;
+  line-height: 80px;
+}
+
+nav ul a:hover {
+  background-color: rgba(222, 222, 222, 0.2);
+}
+
+nav {
+  background-color: #030303;
+  height: 80px;
+}
+
 .image {
   text-align: center;
 }
 
 .image img {
-  height: 50vh;
+  width: 70vw;
 }
 
 .content {
   width: 70vw;
   margin: 0 auto;
+}
+
+.nav-wrapper img {
+  height: 80px;
+}
+
+.button-collapse {
+  display: inline-block;
+  float: right;
 }

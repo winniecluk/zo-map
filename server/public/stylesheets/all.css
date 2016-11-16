@@ -3,17 +3,40 @@ ul {
   list-style-type: none;
 }
 
+li {
+  height: 80px;
+  line-height: 80px;
+}
+
+nav ul a:hover {
+  background-color: rgba(222, 222, 222, 0.2);
+}
+
+nav {
+  background-color: #030303;
+  height: 80px;
+}
+
 .image {
   text-align: center;
 }
 
 .image img {
-  height: 50vh;
+  width: 70vw;
 }
 
 .content {
   width: 70vw;
   margin: 0 auto;
+}
+
+.nav-wrapper img {
+  height: 80px;
+}
+
+.button-collapse {
+  display: inline-block;
+  float: right;
 }
 
 
@@ -79,9 +102,8 @@ ul {
 }
 
 body {
-  background-color: #FFF6E0;
+  background-color: #FFFFFF;
   background-size: contain;
-  font: 18px "Open Sans", sans-serif;
   margin: 0;
 }
 
@@ -127,28 +149,17 @@ info {
 }
 
 .title {
-  text-align: center;
+  text-align: left;
   margin: 64px 0 42px;
   font-weight: bolder;
   font-size: 2em;
-  text-decoration: underline;
 }
 
 .lastdiv {
   padding-bottom: 40px;
 }
 
-
-nav {
-  text-align: right;
-  font-weight: bold;
-  font-size: 20px;
-  background: url('../images/toolbar-3.jpg');
-  background-size: cover;
-  height: 60px;
-}
-
-nav > a {
+/*nav > a {
   margin: 0 22px;
   text-decoration: none;
   height: 60px;
@@ -162,7 +173,7 @@ nav > a:visited {
 
 nav > a:hover {
   color: white;
-}
+}*/
 
 input[type=text] {
   height: 40px;
@@ -186,12 +197,12 @@ input[type=text]:focus {
   border: 1px solid blue;
 }
 
-button {
+/*button {
   background-color: #3498db;
   color: white;
   padding: 10px 20px;
   font-size: 16px;
-}
+}*/
 
 /* for sign-up form */
 

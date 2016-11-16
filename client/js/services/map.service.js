@@ -12,7 +12,7 @@
 
     function renderMap() {
       document.getElementById('map').innerHTML = '';
-      rsr = Raphael('map', '1050', '700');
+      rsr = Raphael('map', '100%', '100%');
       rsrGroups = [group_a];
       group_a = rsr.set();
 
