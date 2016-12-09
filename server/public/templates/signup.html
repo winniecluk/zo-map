@@ -41,6 +41,7 @@
         <option value="sculptor">Sculptor</option>
         <option value="designer">Designer</option>
         <option value="filmmaker">Filmmaker</option>
+        <option value="other">Other</option>
       </select>
     </div>
   </div>
@@ -52,7 +53,7 @@
     <div class="input-field col m6 s12">
       <select class="browser-default" ng-model="vm.newArtist.country">
         <option value="" disabled selected>Country of Origin</option>
-        <option value='United Arab Emirates' selected>United Arab Emirates</option>
+        <option value='United States'>United States</option>
         <option value='Afghanistan'>Afghanistan</option>
         <option value='Albania'>Albania</option>
         <option value='Armenia'>Armenia</option>
@@ -218,7 +219,7 @@
         <option value='Tanzania'>Tanzania</option>
         <option value='Ukraine'>Ukraine</option>
         <option value='Uganda'>Uganda</option>
-        <option value='United States'>United States</option>
+        <option value='United Arab Emirates' selected>United Arab Emirates</option>
         <option value='Uruguay'>Uruguay</option>
         <option value='Uzbekistan'>Uzbekistan</option>
         <option value='Venezuela'>Venezuela</option>
@@ -232,12 +233,18 @@
     </div>
   </div>
   <div class="row">
+    <div class="input-field col m12 s12">
+        <input id="repinfo" type="text" class="field" ng-model="vm.newArtist.repinfo">
+        <label for="repinfo">If you are an artist representative, please include contact info here.</label>
+    </div>
+  </div>
+  <div class="row">
     <div class="input-field col s12">
       <textarea class="materialize-textarea" ng-model="vm.newArtist.biography"></textarea>
-      <label>Short biography you'd like to have displayed:</label>
+      <label>Short biography:</label>
     </div>
   </div>
   <button class="btn" ng-click="vm.postArtist()">Submit</button>
 </div>
 
-<div class="center" ng-if="!vm.blankForm">Thanks for signing up! We'll be in touch with you soon.</div>
+<div class="center space-above" ng-if="!vm.blankForm">Thanks for signing up! We'll be in touch with you soon.</div>

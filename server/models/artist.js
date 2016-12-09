@@ -12,6 +12,7 @@ var artistSchema = new Schema({
   country: String,
   medium: String,
   biography: String,
+  repinfo: String,
   approved: {type: Number, default: 0}
 });
 
