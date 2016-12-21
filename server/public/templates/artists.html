@@ -1,8 +1,14 @@
 <div class="notice" ng-repeat="alert in vm.artistsAlerts track by $index">Artist has been approved!<span class="floatright x" ng-click="vm.popAlert()">X</span></div>
 
+
 <div class="container topmargin">
+  <div class="row">
+    <div class="col m8 s12 space-above">
+      Search Artists: &nbsp;&nbsp;&nbsp; <input class="smaller" ng-model="vm.searchText">
+    </div>
+  </div>
   <div><span class="heading">Pending Artists</span></div>
-  <div class="row" ng-repeat="artist in vm.pendingArtists track by $index">
+  <div class="row" ng-repeat="artist in vm.pendingArtists | filter:vm.searchText track by $index">
     <div class="col s6 m6">
       <div><strong>Name:</strong> {{artist.f_name}}
       {{artist.l_name}}</div>
@@ -28,11 +34,11 @@
 
 <div class="container topmargin">
 <div><span class="heading">Approved Artists</span></div>
-<div ng-repeat="artist in vm.approvedArtists track by $index" ng-if="artist.approved == 1">{{artist.f_name}} {{artist.l_name}}</div>
+<div ng-repeat="artist in vm.approvedArtists | filter:vm.searchText track by $index" ng-if="artist.approved == 1">{{artist.f_name}} {{artist.l_name}}</div>
 </div>
 
 <div class="container topmargin">
 <div><span class="heading">Rejected Artists</span><button class="btn floatright" ng-click="vm.empty()">Empty All</button></div>
 
-<div ng-repeat="artist in vm.rejectedArtists track by $index" ng-if="artist.approved == 2">{{artist.f_name}} {{artist.l_name}}</div>
+<div ng-repeat="artist in vm.rejectedArtists | filter:vm.searchText track by $index" ng-if="artist.approved == 2">{{artist.f_name}} {{artist.l_name}}</div>
 </div>
