@@ -1,9 +1,13 @@
 #ZO Map
 
-<img src="server/public/images/screenshot-frontpage.png" height="340">
 <img src="server/public/images/screenshot-map.png" height="340">
 
-This project is a map for ZO Magazine, a small online arts publication for which I'm currently doing some part-time work.
+This project is a map for ZO Magazine, a small online arts publication for which I'm currently doing some part-time work. As a general user, you can see artists from your country who have been featured in the magazine by clicking around on the map or using the search bar on the Artists' Map page. As an artist, you can apply to be featured in the magazine by filling in the form. 
+
+As an admin, you can log in on the admin page (https://zomap.herokuapp.com/#/login). Using the below credentials, you can approve or reject artists. Once you approve an artist, their information will be displayed on the map when you click on the country from where they've applied.
+
+username: admin
+password: admin
 
 |Table of Contents|
 |-----------------|
@@ -14,17 +18,18 @@ This project is a map for ZO Magazine, a small online arts publication for which
 |[5. Bugs](#bugs)|
 |[6. Routes](#routes)|
 
-##<a name="links">Links</a>
+## <a name="links">Links</a>
 
 [Deployed App](https://zomap.herokuapp.com)  
 [Github repo](https://github.com/winniecluk/zo-map)  
 [Trello Board](https://trello.com/b/okLvJkw9/zo-map)
 
-##<a name="technologies">Technologies Used</a>
+## <a name="technologies">Technologies Used</a>
 
 * HTML5/CSS3/Javascript
 * AngularJS 1.5
 * RaphaëlJS
+* MongoDB with Mongoose
 
 ## <a name="approach">General Approach</a>
 
@@ -35,7 +40,7 @@ For my final project, I had several objectives:
 * bug fix on my own (**mostly accomplished!**)
 
 
-##<a name="installation">Installation Instructions</a>
+## <a name="installation">Installation Instructions</a>
 **Angular dependencies:** ui-router  
 Instructions:  
 1. Load source file in view.  
@@ -48,7 +53,7 @@ Instructions:
 2. Require and use all your middleware in your server.js file  
 3. Done
 
-##<a name="bugs">Bugs</a>
+## <a name="bugs">Bugs</a>
 |Bug/Hurdle|Fix|
 |---|---|
 |not sure how to assign own data to each country in map | discovered .data and wrote a for loop |
@@ -57,7 +62,7 @@ Instructions:
 |render map function was being called only once in service, so map would not render again upon switching back to map view| ran to Jim at 11th hour |
 |cannot use $scope.$apply in one case since Angular said $rootScope already in progress | haven't figured that one out yet |
 
-##<a name="routes">Routes</a>
+## <a name="routes">Routes</a>
 |URI|HTTP request|Use case|Auth Req?|
 |---|------------|--------|---------|
 |api/countries|GET|get the data for all the countries for map display|false|
